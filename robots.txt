@@ -1,0 +1,4 @@
+Sitemap: https://meetu.dev/sitemap.xml
+
+User-agent: *
+Disallow: /api

@@ -1,0 +1,43 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+/* @import url("./home.css");
+@import url("./input.css"); */
+
+*::-webkit-scrollbar {
+  width: 0px;
+  height: 10px;
+}
+
+*::-webkit-scrollbar-thumb {
+  background: hsla(215, 10%, 77%, 0.733);
+  border-radius: 4px;
+}
+*::-webkit-scrollbar-thumb:hover {
+  background: hsla(0, 0%, 59%, 0.524);
+}
+
+.nice-border {
+  padding: 5px 10px;
+  border-radius: 10px;
+  /* border: 2px solid; */
+  border-width: 2px;
+  box-shadow: 3px 3px #00000094;
+  cursor: pointer;
+}
+
+.nice-border:active {
+  box-shadow: none;
+  transform: translate(3px, 3px);
+}
+
+.dot-bg {
+  background: radial-gradient(circle at 1px 1px, #c0c0c0 1px, transparent 0);
+  background-size: 21px 21px;
+  /* background-color: rgb(238, 227, 212); */
+}
+
+.worker-bg {
+  background-color: rgb(238, 227, 212);
+}
