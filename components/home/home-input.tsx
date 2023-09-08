@@ -3,7 +3,7 @@
 import { KeyboardEventHandler, useState } from "react";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
-import { useStoryByEmail } from "@/pages/[nickname]/request";
+import { useStoryByEmail } from "@/pages/q/[id]/request";
 import Link from "next/link";
 import LoadingDots from "../shared/icons/loading-dots";
 

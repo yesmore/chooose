@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { Session } from "next-auth";
-import { useStoryByEmail } from "@/pages/[nickname]/request";
+import { useStoryByEmail } from "@/pages/q/[id]/request";
 import { ExternalLink } from "lucide-react";
 import { UserStory } from "@/lib/types/story";
 

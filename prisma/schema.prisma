@@ -35,7 +35,8 @@ model Session {
   sessionToken String   @unique
   userId       String   @db.ObjectId
   expires      DateTime
-  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
 
   @@index([userId])
 }
@@ -48,6 +49,7 @@ model User {
   image         String?
   accounts      Account[]
   sessions      Session[]
+  Comment       Comment[]
 }
 
 model VerificationToken {
@@ -57,4 +59,43 @@ model VerificationToken {
   expires    DateTime
 
   @@unique([identifier, token])
+}
+
+model Question {
+  id        String    @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String
+  likes     Int       @default(0)
+  dislikes  Int       @default(0)
+  createdAt DateTime
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  answers  Answer[]
+  comments Comment[]
+}
+
+model Answer {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  questionId String @db.ObjectId
+  value      String
+  click      Int    @default(0)
+
+  Question Question @relation(fields: [questionId], references: [id])
+}
+
+model Comment {
+  id         String @id @default(auto()) @map("_id") @db.ObjectId
+  questionId String @db.ObjectId
+  userId     String @db.ObjectId
+  content    String
+  likes      Int    @default(0)
+  dislikes   Int    @default(0)
+
+  createdAt DateTime
+  updatedAt DateTime  @updatedAt
+  deletedAt DateTime?
+
+  user     User     @relation(fields: [userId], references: [id]) // 关联到 User 表的 id 字段
+  Question Question @relation(fields: [questionId], references: [id])
 }

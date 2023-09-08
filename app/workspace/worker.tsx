@@ -10,7 +10,7 @@ import UserFooter from "@/components/layout/user-footer";
 import Modal from "@/components/shared/modal";
 import { ExternalLink, Smartphone, Monitor } from "lucide-react";
 import Link from "next/link";
-import { useStoryByEmail } from "@/pages/[nickname]/request";
+import { useStoryByEmail } from "@/pages/q/[id]/request";
 import PlaceHolder from "@/components/shared/placeholder";
 import "@/styles/input.css";
 import ReactMarkdown from "react-markdown";
