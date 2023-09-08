@@ -1,6 +1,5 @@
 import { getServerSession } from "next-auth/next";
 import NotFound from "@/components/layout/not-found";
-import { getStoryByNickname } from "@/lib/db/story";
 import { authOptions } from "@/pages/api/auth/[...nextauth]/route";
 import Worker from "./worker";
 import { Toaster } from "react-hot-toast";
