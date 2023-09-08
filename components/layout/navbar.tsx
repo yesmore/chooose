@@ -53,9 +53,9 @@ export default function NavBar({ session }: { session: Session | null }) {
           </div>
 
           <Suspense fallback="...">
-            {/* <div>
+            <div>
               {session ? (
-                <UserDropdown session={session} story={story} />
+                <UserDropdown session={session} />
               ) : (
                 <button
                   className="nice-border rounded-full border border-gray-100 text-sm hover:border-gray-800"
@@ -64,7 +64,7 @@ export default function NavBar({ session }: { session: Session | null }) {
                   Sign in
                 </button>
               )}
-            </div> */}
+            </div>
           </Suspense>
         </div>
       </div>

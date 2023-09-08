@@ -14,13 +14,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { UserStory } from "@/lib/types/story";
 
-export default function UserDropdown({
-  session,
-  story,
-}: {
-  session: Session;
-  story?: UserStory;
-}) {
+export default function UserDropdown({ session }: { session: Session }) {
   const { email, image } = session?.user || {};
   const [openPopover, setOpenPopover] = useState(false);
 
@@ -34,30 +28,6 @@ export default function UserDropdown({
             <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
               <p className="truncate text-sm">{email}</p>
             </button>
-
-            {story?.nickname !== undefined ? (
-              <div onClick={() => setOpenPopover(false)}>
-                <Link
-                  className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"
-                  href={`/${story?.nickname}`}
-                  target="_blank"
-                >
-                  <ExternalLink className="h-4 w-4" />
-                  <p className="bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text font-bold text-transparent">
-                    Link now
-                  </p>
-                </Link>
-                <Link
-                  className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"
-                  href={`/workspace`}
-                >
-                  <LayoutDashboard className="h-4 w-4" />
-                  <p className="text-sm">Workspace</p>
-                </Link>
-              </div>
-            ) : (
-              <></>
-            )}
 
             <button
               className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"
