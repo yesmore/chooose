@@ -3,13 +3,11 @@
 import { KeyboardEventHandler, useState } from "react";
 import { Session } from "next-auth";
 import { useRouter } from "next/navigation";
-import { useStoryByEmail } from "@/pages/q/[id]/request";
 import Link from "next/link";
 import LoadingDots from "../shared/icons/loading-dots";
 
 export default function HomeInput({ session }: { session: Session | null }) {
   const route = useRouter();
-  const { story, isLoading } = useStoryByEmail(session?.user?.email || "");
   const [input, setInput] = useState<string>("");
   const [joinClicked, setJoinClicked] = useState(false);
 
@@ -32,18 +30,13 @@ export default function HomeInput({ session }: { session: Session | null }) {
       <input
         type="text"
         disabled={true}
-        value={`${story?.nickname}`}
+        value={""}
         className="cursor-pointer text-cyan-600"
       />
       <span className="absolute left-3 top-2.5 font-semibold text-cyan-500">
         meetu.dev/
       </span>
-      <Link
-        className="invite-btn"
-        type="button"
-        href={`/${story?.nickname}`}
-        target="_blank"
-      >
+      <Link className="invite-btn" type="button" href={`/`} target="_blank">
         Linked
       </Link>
     </>
@@ -77,7 +70,7 @@ export default function HomeInput({ session }: { session: Session | null }) {
     <>
       <div className="input-container mx-auto mt-6 animate-fade-up">
         {/* {renderLinked()} */}
-        {!isLoading && story?.nickname ? renderLinked() : renderUnLink()}
+        {renderLinked()}
       </div>
     </>
   );

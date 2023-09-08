@@ -28,6 +28,9 @@ export const authOptions: NextAuthOptions = {
       },
     }),
   ],
+  pages: {
+    signIn: "/login",
+  },
 };
 
 const handler = NextAuth(authOptions);
@@ -57,17 +60,18 @@ function html(params: { url: string; host: string; theme?: Theme }) {
     <tr>
       <td align="center"
         style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        正在登录 <strong>${escapedHost}</strong>
+        正在登录<strong>${escapedHost}</strong>
       </td>
     </tr>
     <tr>
       <td align="center" style="padding: 15px 0;">
         <table border="0" cellspacing="0" cellpadding="0">
           <tr>
-            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}"><a href="${url}"
-                target="_blank"
+            <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
+              <a href="${url}" target="_blank"
                 style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">点击这里登录
-                </a></td>
+              </a>
+            </td>
           </tr>
         </table>
       </td>
@@ -75,7 +79,7 @@ function html(params: { url: string; host: string; theme?: Theme }) {
     <tr>
       <td align="center"
         style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        如果您没有发送此电子邮件，请忽略它。
+        此链接10分钟内有效。如果您没有发送此电子邮件，请忽略它。
       </td>
     </tr>
   </table>
