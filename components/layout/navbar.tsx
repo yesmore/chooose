@@ -10,7 +10,7 @@ import { useUserList } from "@/pages/q/[id]/request";
 import { Suspense } from "react";
 
 export default function NavBar({ session }: { session: Session | null }) {
-  const { users } = useUserList();
+  // const { users } = useUserList();
   const { SignInModal, setShowSignInModal } = useSignInModal();
   const scrolled = useScroll(50);
 

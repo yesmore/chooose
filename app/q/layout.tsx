@@ -5,7 +5,7 @@ import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 
 export const metadata = {
-  title: "好难选啊",
+  title: "Chooose - 好难选啊",
   description: "...",
   metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",
@@ -21,10 +21,7 @@ export default async function RootLayout({
 }) {
   return (
     <div className={cx(sfPro.variable, inter.variable)}>
-      <div className="fixed h-screen w-full bg-gradient-to-br from-cyan-50 via-yellow-50 to-yellow-100" />
-      <main className="flex min-h-screen w-full flex-col items-center">
-        {children}
-      </main>
+      <main>{children}</main>
     </div>
   );
 }

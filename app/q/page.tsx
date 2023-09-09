@@ -1,10 +1,10 @@
 import { getServerSession } from "next-auth/next";
-
-import UserFooter from "@/components/layout/user-footer";
 import { authOptions } from "../api/auth/[...nextauth]/route";
 import { Wrapper } from "./wrapper";
+import Nav from "@/components/layout/nav";
+import Footer from "@/components/layout/footer";
 
-export default async function UserHome({
+export default async function Questions({
   params,
 }: {
   params: { nickname: string };
@@ -13,7 +13,8 @@ export default async function UserHome({
 
   return (
     <>
-      <div className="relative z-10 w-full overflow-x-hidden">
+      <div className="z-10 min-h-screen w-full bg-gradient-to-br from-cyan-50 via-yellow-50 to-yellow-100 pt-32">
+        <Nav />
         <Wrapper session={session} />
       </div>
     </>

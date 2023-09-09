@@ -28,6 +28,9 @@ dependencies:
   '@types/react-dom':
     specifier: 18.0.10
     version: 18.0.10
+  '@types/wordcloud':
+    specifier: ^1.2.0
+    version: 1.2.0
   '@vercel/og':
     specifier: ^0.0.26
     version: 0.0.26
@@ -91,6 +94,9 @@ dependencies:
   use-debounce:
     specifier: ^9.0.3
     version: 9.0.3(react@18.2.0)
+  wordcloud:
+    specifier: ^1.2.2
+    version: 1.2.2
 
 devDependencies:
   '@tailwindcss/forms':
@@ -834,6 +840,10 @@ packages:
     dependencies:
       '@types/node': 18.11.18
       '@types/webidl-conversions': 7.0.0
+    dev: false
+
+  /@types/wordcloud@1.2.0:
+    resolution: {integrity: sha512-s6wZ7eIi+CBSdsjZwp0yVmL8G8+Eo1vumv/NVUjRtClGtxx+o1S74+PbYZmqp7hAIvRcOazdviQ6qeijxuXfKw==}
     dev: false
 
   /@typescript-eslint/parser@5.62.0(eslint@8.31.0)(typescript@4.9.4):
@@ -4098,6 +4108,10 @@ packages:
     hasBin: true
     dependencies:
       isexe: 2.0.0
+    dev: false
+
+  /wordcloud@1.2.2:
+    resolution: {integrity: sha512-fUnDsGrHXou+49j1OeKaC7nOeZPx+sWjIet0L/j6eAcm0nXy+a+AuUs/iDAX4PLBg1Zc6wgXWXhoXdQsXRWAEw==}
     dev: false
 
   /wrap-ansi@7.0.0:
