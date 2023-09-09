@@ -5,18 +5,12 @@ import Image from "next/image";
 
 export default function Footer() {
   return (
-    <div className="absolute w-full border-t border-gray-200 bg-white py-5 text-center ">
+    <div className="absolute bottom-0 h-32 w-full border-t border-gray-200 bg-white py-5 text-center ">
       <Link
         href="/"
-        className="flex flex-col items-center justify-center font-display"
+        className="flex flex-col items-center justify-center font-display text-xl"
       >
-        <Image
-          src="/logo.png"
-          alt="logo"
-          width="30"
-          height="30"
-          className="rounded-sm"
-        ></Image>
+        🤡
       </Link>
       <div className="mt-2 text-sm">
         <Link href="/privacy">Privacy policy</Link>
@@ -35,11 +29,11 @@ export default function Footer() {
         <span>Copyright © 2023 </span>
         <Link
           className="ml-1 font-medium text-gray-800 transition-colors"
-          href="https://meetu.dev"
+          href="https://chooose.icu"
           target="_blank"
           rel="noopener noreferrer"
         >
-          MeetU
+          chooose.icu
         </Link>
       </div>
     </div>

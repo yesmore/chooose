@@ -5,9 +5,9 @@ import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 
 export const metadata = {
-  title: "Nice to meet you",
+  title: "Chooose",
   description: "...",
-  metadataBase: new URL("https://meetu.dev"),
+  metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",
   icons: {
     // <head><link/></head>

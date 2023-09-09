@@ -11,11 +11,11 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   return [
     {
-      url: "https://meetu.dev",
+      url: "https://chooose.icu",
       lastModified: new Date(),
     },
     ...users.map((user) => ({
-      url: `https://meetu.dev/${user.id}`,
+      url: `https://chooose.icu/${user.id}`,
       lastModified: new Date(),
     })),
   ];

@@ -7,7 +7,7 @@ import Footer from "@/components/layout/footer";
 export const metadata = {
   title: "好难选啊",
   description: "...",
-  metadataBase: new URL("https://meetu.dev"),
+  metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",
   icons: {
     icon: "/logo.png",

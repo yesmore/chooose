@@ -34,7 +34,7 @@ export default function HomeInput({ session }: { session: Session | null }) {
         className="cursor-pointer text-cyan-600"
       />
       <span className="absolute left-3 top-2.5 font-semibold text-cyan-500">
-        meetu.dev/
+        chooose.icu/
       </span>
       <Link className="invite-btn" type="button" href={`/`} target="_blank">
         Linked
@@ -52,7 +52,7 @@ export default function HomeInput({ session }: { session: Session | null }) {
         onKeyDown={(e) => handleEnter(e.key)}
       />
       <span className="text absolute left-3 top-2.5 font-semibold text-cyan-500">
-        meetu.dev/
+        chooose.icu/
       </span>
 
       <button

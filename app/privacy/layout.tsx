@@ -8,7 +8,7 @@ import { Suspense } from "react";
 export const metadata = {
   title: "Privacy",
   description: "...",
-  metadataBase: new URL("https://meetu.dev"),
+  metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",
   icons: {
     // <head><link/></head>

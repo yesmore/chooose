@@ -17,7 +17,7 @@ export const authOptions: NextAuthOptions = {
         const result = await transport.sendMail({
           to: email,
           from: provider.from,
-          subject: `这玩意儿居然让我用邮箱注册`,
+          subject: `您正在登录选择困难症治疗中心`,
           text: text({ url, host }),
           html: html({ url, host }),
         });
@@ -59,17 +59,17 @@ function html(params: { url: string; host: string; theme?: Theme }) {
     style="background: ${color.mainBackground}; max-width: 600px; margin: auto; border-radius: 10px;">
     <tr>
       <td align="center"
-        style="padding: 10px 0px; font-size: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
-        正在登录<strong>${escapedHost}</strong>
+        style="padding: 10px 0px; font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        您正在使用邮箱登录<strong>${escapedHost}</strong>
       </td>
     </tr>
     <tr>
-      <td align="center" style="padding: 15px 0;">
+      <td align="center" style="padding: 5px 0;">
         <table border="0" cellspacing="0" cellpadding="0">
           <tr>
             <td align="center" style="border-radius: 5px;" bgcolor="${color.buttonBackground}">
               <a href="${url}" target="_blank"
-                style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">点击这里登录
+                style="font-size: 18px; font-family: Helvetica, Arial, sans-serif; color: ${color.buttonText}; text-decoration: none; border-radius: 5px; padding: 10px 20px; border: 1px solid ${color.buttonBorder}; display: inline-block; font-weight: bold;">点击登录
               </a>
             </td>
           </tr>
@@ -78,7 +78,7 @@ function html(params: { url: string; host: string; theme?: Theme }) {
     </tr>
     <tr>
       <td align="center"
-        style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 22px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
+        style="padding: 0px 0px 10px 0px; font-size: 16px; line-height: 16px; font-family: Helvetica, Arial, sans-serif; color: ${color.text};">
         此链接10分钟内有效。如果您没有发送此电子邮件，请忽略它。
       </td>
     </tr>

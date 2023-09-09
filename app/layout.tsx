@@ -7,9 +7,9 @@ import { Suspense } from "react";
 import Script from "next/script";
 
 export const metadata = {
-  title: "MeetU",
+  title: "Chooose - 选择困难症治疗中心",
   description: "...",
-  metadataBase: new URL("https://meetu.dev"),
+  metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",
   icons: {
     // <head><link/></head>
@@ -29,7 +29,7 @@ export default async function RootLayout({
         <Script
           async
           id="googletagmanager-a"
-          src="https://www.googletagmanager.com/gtag/js?id=G-MJ79QL6TXQ"
+          src="https://www.googletagmanager.com/gtag/js?id=G-6YH1GY4C11"
         ></Script>
         <Script
           async
@@ -40,7 +40,7 @@ export default async function RootLayout({
             window.dataLayer = window.dataLayer || [];
             function gtag(){dataLayer.push(arguments);}
             gtag('js', new Date());
-            gtag('config', 'G-MJ79QL6TXQ');
+            gtag('config', 'G-6YH1GY4C11');
               `,
           }}
         ></Script>

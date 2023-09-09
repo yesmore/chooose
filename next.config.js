@@ -14,7 +14,7 @@ const nextConfig = {
     return [
       {
         source: "/github",
-        destination: "https://github.com/yesmore/meetu",
+        destination: "https://github.com/yesmore/chooose",
         permanent: false,
       },
     ];

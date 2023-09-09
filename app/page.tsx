@@ -19,10 +19,10 @@ export default async function Home() {
 
   return (
     <>
-      <div className="w-full bg-gradient-to-br from-cyan-50 via-yellow-50 to-yellow-100 pt-32">
+      <div className="z-10 h-screen w-full bg-gradient-to-br from-cyan-50 via-yellow-50 to-yellow-100 pt-32">
         {/* @ts-expect-error Server Component */}
         <Nav />
-        <div className="z-10 pb-12">
+        <div className="">
           <div
             className="mx-auto w-full max-w-[80%] text-center md:max-w-[70%]"
             style={{
@@ -31,19 +31,16 @@ export default async function Home() {
             }}
           >
             <p className="title-font animate-fade-up text-center font-display text-3xl font-bold tracking-[-0.02em] text-slate-700 drop-shadow-sm md:text-5xl">
+              选择困难症
               <span className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ">
-                Make{" "}
+                治疗
               </span>
-              your unique space, and stay here{" "}
-              <span className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ">
-                forever.
-              </span>
+              中心
             </p>
 
             <p className="mt-5 animate-fade-up text-slate-500 ">
-              Enter a nickname ,and create your homepage with just one click.🎉
+              这里收录了一些奇奇怪怪的“选择题”
             </p>
-            <HomeInput session={session} />
           </div>
           <About />
         </div>
@@ -61,23 +58,20 @@ function About() {
           <CardItem
             bgColor="bg-cyan-400"
             rotate="rotate-12 origin-top-left"
-            icon={<Github />}
+            icon={"A"}
           />
 
-          <CardItem bgColor="bg-orange-400" rotate="rotate-45" icon="🎉" />
-          <CardItem
-            rotate="rotate-12 origin-top-left"
-            icon={<Twitter className="h-4 w-4 text-blue-400" />}
-          />
-          <CardItem bgColor="bg-pink-400" rotate="-rotate-12" icon="🎭" />
+          <CardItem bgColor="bg-orange-400" rotate="rotate-45" icon="B" />
+          <CardItem rotate="rotate-12 origin-top-left" icon={"C"} />
+          <CardItem bgColor="bg-pink-400" rotate="-rotate-12" icon="D" />
         </div>
-        <div className="pb-8 pt-2 text-2xl font-semibold">
+        {/* <div className="pb-8 pt-2 text-2xl font-semibold">
           Choose the{" "}
           <span className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ">
             links{" "}
           </span>
           that best represents you.
-        </div>
+        </div> */}
       </div>
       <div className="mx-auto mt-12 flex max-w-[80%] items-center justify-center ">
         {/* <SocialCard /> */}
@@ -103,7 +97,7 @@ function CardItem({
           " flex h-14 w-14 cursor-pointer items-center justify-center rounded-xl text-xl shadow-md transition-all hover:rotate-0 md:h-20 md:w-20"
         }
       >
-        <span className="md:scale-150">{icon}</span>
+        <span className="font-bold text-slate-100 md:scale-150">{icon}</span>
       </div>
     </>
   );

@@ -1,4 +1,4 @@
-Sitemap: https://meetu.dev/sitemap.xml
+Sitemap: https://chooose.icu/sitemap.xml
 
 User-agent: *
 Disallow: /api

@@ -27,23 +27,27 @@ export default function NavBar({ session }: { session: Session | null }) {
         <div className="mx-5 flex h-16 w-full max-w-screen-xl items-center justify-between">
           <div className="flex">
             <Link href="/" className="flex items-center font-display">
-              <Image
+              {/* <Image
                 src="/logo.png"
                 alt="logo"
                 width="30"
                 height="30"
                 className="mr-2 rounded-sm"
-              ></Image>
-              <p className="via-dark-500 bg-gradient-to-r from-gray-500 to-gray-400 bg-clip-text font-bold text-transparent">
-                Meet.U
+              ></Image> */}
+              <p className="via-dark-500 bg-gradient-to-r from-gray-600 to-gray-500 bg-clip-text font-bold text-transparent">
+                Ch
+                <span className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ">
+                  ooo
+                </span>
+                se.icu
               </p>
             </Link>
-            <Link
+            {/* <Link
               href="/stories"
               className="mx-4 flex items-center font-display text-slate-600 hover:text-slate-500"
             >
-              story
-            </Link>
+              榜单
+            </Link> */}
             {/* <Link
               href="/about"
               className="flex items-center font-display hover:text-slate-500"
@@ -61,7 +65,7 @@ export default function NavBar({ session }: { session: Session | null }) {
                   className="nice-border rounded-full border border-gray-100 text-sm hover:border-gray-800"
                   onClick={() => setShowSignInModal(true)}
                 >
-                  Sign in
+                  注册/登录
                 </button>
               )}
             </div>
