@@ -14,6 +14,7 @@ export default async function Questions({
   return (
     <>
       <div className="z-10 min-h-screen w-full bg-gradient-to-br from-cyan-50 via-yellow-50 to-yellow-100 pt-32">
+        {/* @ts-expect-error Server Component */}
         <Nav />
         <Wrapper session={session} />
       </div>
