@@ -3,7 +3,7 @@
 import { Session } from "next-auth";
 import { useAnswers } from "./request";
 
-export function Wrapper({
+export function AnswerWrapper({
   session,
   questionId,
 }: {
@@ -14,7 +14,7 @@ export function Wrapper({
 
   return (
     <div>
-      <div></div>
+      <div>答案:{answers?.length}</div>
     </div>
   );
 }
