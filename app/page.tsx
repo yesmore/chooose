@@ -58,7 +58,10 @@ function About() {
     <div className="grids mx-auto my-12 max-w-[90%] text-center md:max-w-[80%]">
       <div className=" relative py-4 px-5 text-center text-sm text-slate-500 md:text-lg">
         <WordClouds />
-        <div className="absolute top-24 z-10 flex w-full items-center justify-center gap-8 py-8 md:gap-12">
+        <div
+          className="absolute top-20 left-[50%] z-10 flex w-full items-center justify-center gap-8 py-8 md:gap-12"
+          style={{ transform: "translate(-50%, 0)" }}
+        >
           <CardItem
             bgColor="bg-cyan-400"
             rotate="rotate-12 origin-top-left"
