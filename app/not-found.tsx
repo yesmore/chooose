@@ -4,7 +4,7 @@ import Link from "next/link";
 export default async function NotFound() {
   return (
     <>
-      <div className="text-dark-100 z-10 flex w-full max-w-xl flex-col items-center justify-center px-5">
+      <div className="text-dark-100 z-10 mx-auto mt-24 flex w-full max-w-xl flex-col items-center justify-center px-5">
         <Image
           src="/not-found.svg"
           alt="404"

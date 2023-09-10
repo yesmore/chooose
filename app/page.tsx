@@ -11,6 +11,7 @@ import { ReactNode } from "react";
 import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 import WordClouds from "@/components/home/word-cloud";
+import Link from "next/link";
 
 export default async function Home() {
   const session = await getServerSession(authOptions);
@@ -39,11 +40,13 @@ export default async function Home() {
               </span>
             </p>
 
-            <p className="mt-5 animate-fade-up text-slate-500 ">
+            <p className="my-5 animate-fade-up text-slate-500 ">
               这里收录了一些奇奇怪怪的“选择题”，你可以随意选择
             </p>
 
-            <button className="nice-border mt-5">开始第一道选择题</button>
+            <Link href="/p" className="nice-border">
+              开始第一道选择题
+            </Link>
           </div>
           <About />
         </div>

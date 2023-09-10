@@ -1,13 +1,13 @@
 import { getServerSession } from "next-auth/next";
-import { authOptions } from "../api/auth/[...nextauth]/route";
-import { Wrapper } from "./wrapper";
+import { authOptions } from "../../api/auth/[...nextauth]/route";
+import { QuestionWrapper } from "../question";
 import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 
 export default async function Questions({
   params,
 }: {
-  params: { nickname: string };
+  params: { id: string };
 }) {
   const session = await getServerSession(authOptions);
 
@@ -16,8 +16,9 @@ export default async function Questions({
       <div className="z-10 min-h-screen w-full bg-gradient-to-br from-cyan-50 via-yellow-50 to-yellow-100 pt-20">
         {/* @ts-expect-error Server Component */}
         <Nav />
-        <Wrapper session={session} />
+        <QuestionWrapper session={session} questionId={params.id} />
       </div>
+      <Footer />
     </>
   );
 }

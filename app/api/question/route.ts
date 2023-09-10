@@ -1,17 +1,19 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  createAnswers,
-  createQuestion,
-  getRandomQuestion,
-} from "@/lib/db/question";
+import { createAnswers, createQuestion, getQuestion } from "@/lib/db/question";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Record<string, string | string | undefined[]> },
 ) {
-  const question = await getRandomQuestion();
+  try {
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const question = await getQuestion(id || undefined);
 
-  return NextResponse.json(question);
+    return NextResponse.json(question);
+  } catch (error) {
+    return NextResponse.json(error);
+  }
 }
 
 export async function POST(

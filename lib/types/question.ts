@@ -13,7 +13,7 @@ export interface Answer {
   id?: string;
   questionId: string;
   value: string;
-  click: string;
+  click: number;
 }
 
 export interface Comment {

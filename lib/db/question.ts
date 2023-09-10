@@ -1,3 +1,4 @@
+import { ObjectId } from "mongodb";
 import { Question } from "../types/question";
 import prisma from "./prisma";
 
@@ -57,25 +58,70 @@ export async function updateQuestion(data: Question) {
   return updatedQuestion;
 }
 
-export async function getRandomQuestion() {
-  const documentCount = await prisma.question.count();
+export async function getQuestion(id?: string, ids: string[] = []) {
+  if (id) {
+    const res = await prisma.question.findFirst({
+      where: { id },
+    });
+
+    return res;
+  } else {
+    const documentCount = await prisma.question.count({
+      where: {
+        id: {
+          not: {
+            in: ids,
+          },
+        },
+      },
+    });
+    if (documentCount === 0) return null;
+
+    const randomIndex = Math.floor(Math.random() * documentCount);
+    const randomDocument = await prisma.question.findFirst({
+      where: {
+        id: {
+          not: {
+            in: ids,
+          },
+        },
+      },
+      skip: randomIndex,
+    });
+    console.log("[randomDocument]", randomDocument);
+
+    return randomDocument;
+  }
+}
+export async function getQuestionByExcludedIds(ids: string[]) {
+  const documentCount = await prisma.question.count({
+    where: {
+      id: {
+        not: {
+          in: ids,
+        },
+      },
+    },
+  });
 
   if (documentCount === 0) return null;
 
   const randomIndex = Math.floor(Math.random() * documentCount);
-  const randomDocument = await prisma.question.findFirst({
-    skip: randomIndex,
-  });
 
-  return randomDocument;
-}
-export async function getQuestionById(id: string) {
   const res = await prisma.question.findFirst({
-    where: { id },
+    where: {
+      id: {
+        not: {
+          in: ids,
+        },
+      },
+    },
+    skip: randomIndex,
   });
 
   return res;
 }
+
 export async function getAnswers(questionId: string) {
   const answer = await prisma.answer.findMany({
     where: {
@@ -84,4 +130,28 @@ export async function getAnswers(questionId: string) {
   });
 
   return answer;
+}
+
+export async function updateAnswer(answerId: string, type: "add" | "sub") {
+  const answer = await prisma.answer.findUnique({
+    where: {
+      id: answerId,
+    },
+  });
+
+  if (!answer) {
+    return null;
+  }
+
+  // 更新 click 字段
+  const updatedAnswer = await prisma.answer.update({
+    where: {
+      id: answerId,
+    },
+    data: {
+      click: answer.click + (type === "add" ? 1 : answer.click === 0 ? 0 : -1),
+    },
+  });
+
+  return updatedAnswer;
 }
