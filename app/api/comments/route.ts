@@ -1,17 +1,13 @@
 import { NextRequest, NextResponse } from "next/server";
-import {
-  createAnswers,
-  createQuestion,
-  getRandomQuestion,
-} from "@/lib/db/question";
+import { createAnswers, createQuestion } from "@/lib/db/question";
 
 export async function GET(
   req: NextRequest,
   { params }: { params: Record<string, string | string | undefined[]> },
 ) {
-  const question = await getRandomQuestion();
+  // const question = await getRandomQuestion();
 
-  return NextResponse.json({ question });
+  return NextResponse.json(1);
 }
 
 export async function POST(
