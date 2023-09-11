@@ -58,6 +58,48 @@ export async function updateQuestion(data: Question) {
   return updatedQuestion;
 }
 
+export async function updateQuestionLikes(id: string, type: "add" | "sub") {
+  const res = await prisma.question.findFirst({
+    where: { id },
+  });
+  if (!res) return null;
+
+  const new_likes =
+    type === "add" ? res.likes + 1 : res.likes <= 0 ? 0 : res.likes - 1;
+  await prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      likes: new_likes,
+      // dislikes: data.dislikes,
+    },
+  });
+  return new_likes;
+}
+export async function updateQuestionDislikes(id: string, type: "add" | "sub") {
+  const res = await prisma.question.findFirst({
+    where: { id },
+  });
+  if (!res) return null;
+
+  const new_dislikes =
+    type === "add"
+      ? res.dislikes + 1
+      : res.dislikes <= 0
+      ? 0
+      : res.dislikes - 1;
+  await prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      dislikes: new_dislikes,
+    },
+  });
+  return new_dislikes;
+}
+
 export async function getQuestionByIndex(index: number = 0) {
   const documentCount = await prisma.question.count();
 

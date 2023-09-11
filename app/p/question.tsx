@@ -13,6 +13,8 @@ import NotFound from "@/components/layout/not-found";
 import CommentWrapper from "./comment";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import toast, { Toaster } from "react-hot-toast";
+import { ArrowRight, ArrowLeft, ThumbsUp, ThumbsDown } from "lucide-react";
+import { nFormatter } from "../../lib/utils";
 
 export function QuestionWrapper({
   session,
@@ -26,11 +28,15 @@ export function QuestionWrapper({
     0,
   );
   const [currentQuestion, setCurrentQuestion] = useState<Question>();
+  const [currentLikes, setCurrentLikes] = useState(0);
+  const [currentDislikes, setCurrentDislikes] = useState(0);
   const { data, isLoading, isError } = useQuestion(
     cacheQuestionIndex,
     questionId,
   );
   const [canUpdateQuestion, setCanUpdateQuestion] = useState(true);
+  const [isLike, setIslike] = useState(false);
+  const [isDislike, setIsDislike] = useState(false);
 
   useEffect(() => {
     // 第一次请求或点击上/下一题时可赋值
@@ -39,6 +45,18 @@ export function QuestionWrapper({
       setCanUpdateQuestion(false);
     }
   }, [data]);
+
+  useEffect(() => {
+    setIslike(false);
+    setIsDislike(false);
+  }, [cacheQuestionIndex]);
+
+  useEffect(() => {
+    if (currentQuestion) {
+      setCurrentLikes(currentQuestion.likes);
+      setCurrentDislikes(currentQuestion.dislikes);
+    }
+  }, [currentQuestion]);
 
   const handleCreate = () => {
     fetcher("/api/question", {
@@ -73,6 +91,51 @@ export function QuestionWrapper({
     setCacheQuestionIndex(0);
   };
 
+  const handleUpdateLikes = async (key: "likes" | "dislikes") => {
+    if (!session?.user) {
+      toast("请先登陆");
+      return;
+    }
+
+    if (key === "likes") {
+      if (isLike) {
+        handleRequestUpdateLikes("likes", "sub");
+      } else {
+        handleRequestUpdateLikes("likes", "add");
+      }
+      setIslike(!isLike);
+    } else {
+      if (isDislike) {
+        handleRequestUpdateLikes("dislikes", "sub");
+      } else {
+        handleRequestUpdateLikes("dislikes", "add");
+      }
+      setIsDislike(!isDislike);
+    }
+  };
+
+  const handleRequestUpdateLikes = async (
+    key: "likes" | "dislikes",
+    type: "add" | "sub",
+  ) => {
+    const res = await fetcher(`/api/question`, {
+      method: "PUT",
+      body: JSON.stringify({
+        questionId: currentQuestion?.id,
+        key,
+        type,
+      }),
+    });
+
+    if (res) {
+      if (key === "likes") {
+        setCurrentLikes(res);
+      } else {
+        setCurrentDislikes(res);
+      }
+    }
+  };
+
   return (
     <div
       className="z-10 mx-auto max-w-[80%] md:max-w-[70%]"
@@ -104,14 +167,15 @@ export function QuestionWrapper({
             <h3 className="">{currentQuestion?.title}</h3>
             {!questionId && (
               <Link
+                className="rounded border border-slate-100 p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
                 href={`/p/${data.data.id}`}
                 target="_blank"
-                className="nice-border bg-gradient-to-r from-indigo-500 via-purple-500 to-pink-500 bg-clip-text text-sm text-transparent after:content-['↗'] "
               >
-                分享
+                <span>题链</span>
               </Link>
             )}
           </div>
+
           <p className="mb-6">{currentQuestion?.content}</p>
 
           {currentQuestion?.id && (
@@ -125,26 +189,57 @@ export function QuestionWrapper({
       )}
 
       {!questionId && (
-        <div className="actions mt-6">
+        <div className="actions mt-10 w-full">
           {/* <button onClick={() => handleCreate()}>创建</button> */}
-          <p>
+          {/* <p>
             共{data?.count}题，当前第{cacheQuestionIndex + 1}题
-          </p>
-          <button className="nice-border" onClick={handlePrevQuestion}>
-            上一题
-          </button>
-          <button className="nice-border" onClick={handleNextQuestion}>
-            下一题
-          </button>
-          <button className="nice-border" onClick={handleCleat}>
-            清空缓存
-          </button>
+          </p> */}
+          <div className="flex items-center justify-between border-b pb-2">
+            <div className="flex items-center gap-2">
+              <button
+                className={
+                  "flex items-center gap-1 rounded-lg text-slate-500 transition-all hover:text-slate-600 " +
+                  `${isLike ? "text-blue-600" : ""}`
+                }
+                onClick={() => handleUpdateLikes("likes")}
+              >
+                <ThumbsUp className="w-4" />
+                <span className="text-xs">{nFormatter(currentLikes)}</span>
+              </button>
+              <button
+                className={
+                  "flex items-center gap-1 rounded-lg text-slate-400 transition-all hover:text-slate-600 " +
+                  `${isDislike ? "text-blue-600" : ""}`
+                }
+                onClick={() => handleUpdateLikes("dislikes")}
+              >
+                <ThumbsDown className="w-4" />
+                <span className="text-xs">{nFormatter(currentDislikes)}</span>
+              </button>
+            </div>
+
+            <div className="flex items-center gap-2">
+              <button
+                className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
+                onClick={handlePrevQuestion}
+              >
+                <ArrowLeft className="w-5" />
+              </button>
+              <button
+                className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
+                onClick={handleNextQuestion}
+              >
+                <ArrowRight className="w-5" />
+              </button>
+            </div>
+          </div>
         </div>
       )}
+
       {questionId && (
         <div className="mt-6">
           <Link href="/p" className="">
-            更多选择题
+            查看更多
           </Link>
         </div>
       )}

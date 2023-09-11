@@ -7,6 +7,7 @@ import "@/styles/home.css";
 import "@/styles/globals.css";
 import "@/styles/home.css";
 import "@/styles/input.css";
+import "@/styles/button.css";
 import { ReactNode } from "react";
 import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
