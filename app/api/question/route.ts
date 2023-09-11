@@ -1,5 +1,10 @@
 import { NextRequest, NextResponse } from "next/server";
-import { createAnswers, createQuestion, getQuestion } from "@/lib/db/question";
+import {
+  createAnswers,
+  createQuestion,
+  getQuestionById,
+  getQuestionByIndex,
+} from "@/lib/db/question";
 
 export async function GET(
   req: NextRequest,
@@ -7,10 +12,17 @@ export async function GET(
 ) {
   try {
     const { searchParams } = new URL(req.url);
+    const index = searchParams.get("i");
     const id = searchParams.get("id");
-    const question = await getQuestion(id || undefined);
+    if (!index) return NextResponse.json("empty index");
 
-    return NextResponse.json(question);
+    if (!id) {
+      const data = await getQuestionByIndex(Number(index));
+      return NextResponse.json(data);
+    } else {
+      const data = await getQuestionById(id);
+      return NextResponse.json(data);
+    }
   } catch (error) {
     return NextResponse.json(error);
   }

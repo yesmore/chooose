@@ -11,6 +11,7 @@ import "react-loading-skeleton/dist/skeleton.css";
 
 interface UserSelectedQuestion {
   question_id: string;
+  question_title: string;
   answer_id: string;
   answer_index: number;
 }
@@ -18,11 +19,11 @@ interface UserSelectedQuestion {
 export function AnswerWrapper({
   session,
   questionId,
-  setCurrentQuestion,
+  questionTitle,
 }: {
   session: Session | null;
   questionId: string;
-  setCurrentQuestion: Dispatch<SetStateAction<Question | undefined>>;
+  questionTitle: string;
 }) {
   const { answers, isLoading } = useAnswers(questionId);
   const [currentAnswers, setCurrentAnswers] = useState<Answer[]>();
@@ -35,6 +36,11 @@ export function AnswerWrapper({
   const [existingQuestionIndex, setExistingQuestionIndex] =
     useState<number>(-1);
 
+  // useEffect(() => {
+  //   setSelectIndex(-1);
+  // setExistingQuestionIndex(-1);
+  // }, [questionId]);
+
   useEffect(() => {
     if (answers) {
       setCurrentAnswers(answers);
@@ -43,22 +49,22 @@ export function AnswerWrapper({
   }, [answers]);
 
   useEffect(() => {
-    setExistingQuestionIndex(
-      userSelectedQuestions.findIndex(
-        (item) => item.question_id === questionId,
-      ),
-    );
-
-    if (userSelectedQuestions && existingQuestionIndex !== -1) {
+    if (userSelectedQuestions) {
       // 初始化选项
-      setSelectIndex(userSelectedQuestions[existingQuestionIndex].answer_index);
+      setExistingQuestionIndex(
+        userSelectedQuestions.findIndex(
+          (item) => item.question_id === questionId,
+        ),
+      );
+      if (existingQuestionIndex !== -1) {
+        setSelectIndex(
+          userSelectedQuestions[existingQuestionIndex].answer_index,
+        );
+      } else {
+        setSelectIndex(-1);
+      }
     }
-
-    console.log("【用户答题缓存】", userSelectedQuestions);
-    console.log("【是否已回答】", existingQuestionIndex, selectIndex);
-  }, [userSelectedQuestions, existingQuestionIndex]);
-
-  const handleGetQuestion = () => {};
+  }, [userSelectedQuestions, existingQuestionIndex, questionId]);
 
   const onCaclePercent = (itemClick: number) =>
     `${((itemClick / totalClick) * 100).toFixed(2)}%`;
@@ -142,6 +148,7 @@ export function AnswerWrapper({
         ...userSelectedQuestions,
         {
           question_id: questionId,
+          question_title: questionTitle,
           answer_id: id,
           answer_index: index,
         },
@@ -149,39 +156,23 @@ export function AnswerWrapper({
     }
   };
 
-  const handleNextQuestion = async () => {
-    setCurrentAnswers([]);
-    const res = await fetcher("/api/next-question", {
-      method: "POST",
-      body: JSON.stringify({
-        ids: userSelectedQuestions
-          .map((item) => item.question_id)
-          .concat([questionId]),
-      }),
-    });
-    if (res) {
-      setCurrentQuestion(res);
-      setSelectIndex(-1);
-      const ans = await fetcher(`/api/answers?id=${res.id}`, {
-        method: "GET",
-      });
-      setCurrentAnswers(ans);
-    }
-  };
-
   return (
     <div className="">
-      {currentAnswers?.length === 0 && (
-        <div className=" mt-4 grid grid-cols-1 gap-4 text-center md:grid-cols-2 xl:grid-cols-4">
-          <Skeleton className="" style={{ width: "100%" }} height={48} />
-          <Skeleton className="" style={{ width: "100%" }} height={48} />
-          <Skeleton className="" style={{ width: "100%" }} height={48} />
-          <Skeleton className="" style={{ width: "100%" }} height={48} />
+      {isLoading && (
+        <div className=" mt-4 grid grid-cols-1 gap-4 text-center md:grid-cols-2 ">
+          {[1, 2, 3, 4].map((item) => (
+            <Skeleton
+              key={item}
+              className=""
+              style={{ width: "100%" }}
+              height={48}
+            />
+          ))}
         </div>
       )}
-      <div className="grid grid-cols-1 gap-4 text-center md:grid-cols-2 xl:grid-cols-4">
-        {currentAnswers &&
-          currentAnswers.map((item, index) => (
+      {!isLoading && currentAnswers && (
+        <div className="grid grid-cols-1 gap-4 text-center md:grid-cols-2 ">
+          {currentAnswers.map((item, index) => (
             <div
               className={generateItemClasses(index)}
               key={item.id}
@@ -197,15 +188,12 @@ export function AnswerWrapper({
               </div>
             </div>
           ))}
-      </div>
+        </div>
+      )}
       <div className="float-right mt-3 text-sm">
         {existingQuestionIndex !== -1 ? "已回答" : "未回答"} / 已选择
         {nFormatter(totalClick)}次
       </div>
-
-      <button className="nice-border mt-6" onClick={() => handleNextQuestion()}>
-        下一题
-      </button>
     </div>
   );
 }

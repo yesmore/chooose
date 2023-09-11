@@ -2,20 +2,22 @@ import { fetcher } from "@/lib/utils";
 import useSWR from "swr";
 import { Answer, Question } from "@/lib/types/question";
 
-export function useQuestion(ids: string[], id?: string) {
-  let api = `/api/next-question`;
-  const { data, error, isLoading } = useSWR<Question>(api, () =>
-    fetcher(api, {
-      method: "POST",
-      body: JSON.stringify({
-        id,
-        ids,
+interface QuestionResponse {
+  data: Question;
+  count: number;
+}
+
+export function useQuestion(index: number, id?: string) {
+  const { data, error, isLoading } = useSWR<QuestionResponse>(
+    `/api/question?i=${index}`,
+    () =>
+      fetcher(`/api/question?i=${index}${id ? `&id=${id}` : ""}`, {
+        method: "GET",
       }),
-    }),
   );
 
   return {
-    question: data,
+    data: data,
     isLoading,
     isError: error,
   };

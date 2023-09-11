@@ -58,40 +58,48 @@ export async function updateQuestion(data: Question) {
   return updatedQuestion;
 }
 
-export async function getQuestion(id?: string, ids: string[] = []) {
-  if (id) {
-    const res = await prisma.question.findFirst({
-      where: { id },
-    });
+export async function getQuestionByIndex(index: number = 0) {
+  const documentCount = await prisma.question.count();
 
-    return res;
-  } else {
-    const documentCount = await prisma.question.count({
-      where: {
-        id: {
-          not: {
-            in: ids,
-          },
-        },
-      },
-    });
+  if (documentCount <= 0) return null;
+
+  if (index >= documentCount) {
+    // 超出最后一个，随机返回
+    const documentCount = await prisma.question.count();
     if (documentCount === 0) return null;
 
     const randomIndex = Math.floor(Math.random() * documentCount);
     const randomDocument = await prisma.question.findFirst({
-      where: {
-        id: {
-          not: {
-            in: ids,
-          },
-        },
-      },
       skip: randomIndex,
     });
     console.log("[randomDocument]", randomDocument);
 
-    return randomDocument;
+    return { count: documentCount, data: randomDocument };
   }
+
+  const res = await prisma.question.findFirst({
+    // where: {
+    //   id: {
+    //     not: {
+    //       in: [],
+    //     },
+    //   },
+    // },
+    skip: index,
+  });
+
+  return { count: documentCount, data: res };
+}
+export async function getQuestionById(id: string) {
+  const documentCount = await prisma.question.count();
+
+  if (documentCount <= 0) return null;
+
+  const res = await prisma.question.findFirst({
+    where: { id },
+  });
+
+  return { count: documentCount, data: res };
 }
 export async function getQuestionByExcludedIds(ids: string[]) {
   const documentCount = await prisma.question.count({

@@ -7,7 +7,7 @@ export async function POST(
 ) {
   try {
     const { id, ids } = await req.json();
-    const question = await getQuestion(id, ids);
+    const question = await getQuestion(id);
 
     return NextResponse.json(question);
   } catch (error) {
