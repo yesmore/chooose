@@ -10,11 +10,6 @@ export async function GET(
   { params }: { params: Record<string, string | string | undefined[]> },
 ) {
   try {
-    const session = await getServerSession(authOptions);
-    if (!session?.user) {
-      return NextResponse.json("请登录");
-    }
-
     const { searchParams } = new URL(req.url);
     const email = searchParams.get("email");
 
