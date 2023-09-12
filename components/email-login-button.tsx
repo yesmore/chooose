@@ -5,10 +5,11 @@ import { signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 import { isEmail } from "@/lib/utils";
 import { LoadingDots } from "./shared/icons";
+import { usePathname } from "next/navigation";
 
 export default function EmailButton() {
+  const pathname = usePathname();
   const [email, setEmail] = useState("");
-
   const [loading, setLoading] = useState(false);
   const [isSendSuccess, setIsSendSuccess] = useState(false);
 
@@ -32,7 +33,7 @@ export default function EmailButton() {
     const sign_req = await signIn("email", {
       email: email,
       image: "https://chooose.icu/_next/image?url=%2Flogo.png&w=32&q=75",
-      callbackUrl: `/`,
+      callbackUrl: pathname,
       redirect: false,
     });
     setTimeout(() => {
@@ -50,8 +51,6 @@ export default function EmailButton() {
     }
   };
   const handleKeydown = (key: string) => {
-    console.log(key);
-
     if (key === "Enter") {
       handleSubmit();
     }

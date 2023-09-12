@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { useComments, useUserInfoByEmail } from "./request";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { fetcher, getAvatarByEmail } from "@/lib/utils";
+import { fetcher, getAvatarById } from "@/lib/utils";
 import { Comment } from "@/lib/types/question";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
@@ -86,7 +86,7 @@ export default function CommentWrapper({
         <div>
           <textarea
             className="w-full rounded-md border"
-            placeholder="评论内容，支持Markdown语法"
+            placeholder="支持Markdown语法"
             value={inputComment}
             onChange={(e) => setInputComment(e.target.value)}
           />
@@ -99,7 +99,7 @@ export default function CommentWrapper({
           </button>
         </div>
 
-        <div className="pb-4 ">
+        <div className="py-4 ">
           {commentList &&
             commentList.map((item, index) => (
               <div
@@ -110,25 +110,29 @@ export default function CommentWrapper({
                   <div className="flex items-center gap-2">
                     <Image
                       alt={"avatar"}
-                      src={user?.image || getAvatarByEmail(user?.email || "")}
-                      width={30}
-                      height={30}
+                      src={getAvatarById(item.userId)}
+                      width={25}
+                      height={25}
+                      className=" border border-slate-600"
                     />
                     <span> {item.userName}</span>
                   </div>
 
-                  {item.userId === user?.id && (
-                    <div>
+                  <div className="flex items-center gap-2">
+                    <span className=" text-xs text-slate-400">
+                      {item.createdAt}
+                    </span>
+                    {item.userId === user?.id && (
                       <Trash2
-                        className=" float-right h-4 w-4 cursor-pointer text-slate-400"
+                        className=" h-4 w-4 cursor-pointer text-slate-400"
                         onClick={() =>
                           handleDeleteComment(item.id || "", user.email)
                         }
                       />
-                    </div>
-                  )}
+                    )}
+                  </div>
                 </div>
-                <ReactMarkdown className="my-1 text-sm">
+                <ReactMarkdown className="my-1 pl-9 text-sm">
                   {item.content}
                 </ReactMarkdown>
               </div>

@@ -23,4 +23,5 @@ export async function GET(
   }
 }
 
+// fix error: "DYNAMIC_SERVER_USAGE"
 export const dynamic = "force-dynamic";

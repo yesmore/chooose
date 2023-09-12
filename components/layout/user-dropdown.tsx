@@ -9,7 +9,7 @@ import { Session } from "next-auth";
 import Link from "next/link";
 import { UserStory } from "@/lib/types/story";
 import { useUserInfoByEmail } from "@/pages/p/request";
-import { getAvatarByEmail } from "@/lib/utils";
+import { getAvatarById } from "@/lib/utils";
 
 export default function UserDropdown({ session }: { session: Session }) {
   const { email, image } = session?.user || {};
@@ -60,7 +60,7 @@ export default function UserDropdown({ session }: { session: Session }) {
         >
           <Image
             alt={email}
-            src={image || getAvatarByEmail(email)}
+            src={getAvatarById(user?.id || "chooose")}
             width={40}
             height={40}
           />

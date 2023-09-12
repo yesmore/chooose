@@ -74,6 +74,6 @@ export function isEmail(str: string) {
   return reg.test(str);
 }
 
-export function getAvatarByEmail(email: string) {
-  return `https://avatars.dicebear.com/api/micah/${email}.svg`;
+export function getAvatarById(id: string) {
+  return `https://avatars.dicebear.com/api/micah/${id}.svg`;
 }
