@@ -58,17 +58,6 @@ export function QuestionWrapper({
     }
   }, [currentQuestion]);
 
-  const handleCreate = () => {
-    fetcher("/api/question", {
-      method: "POST",
-      body: JSON.stringify({
-        title: "标题3",
-        content: "内容尼尔内容内容",
-        answers: ["answers1", "answers2", "answers3", "answers4"],
-      }),
-    });
-  };
-
   const handleNextQuestion = () => {
     setCanUpdateQuestion(true);
     const count = data?.count ?? 0;
@@ -138,7 +127,7 @@ export function QuestionWrapper({
 
   return (
     <div
-      className="z-10 mx-auto max-w-[80%] md:max-w-[70%]"
+      className="z-10 mx-auto max-w-[85%] md:max-w-[70%]"
       style={{
         animationDelay: "0.15s",
         animationFillMode: "forwards",
@@ -163,7 +152,7 @@ export function QuestionWrapper({
       {!isLoading && !data && <NotFound />}
       {data && !isLoading && (
         <div className="mt-4 animate-fade-in ">
-          <div className="mb-2 flex items-center justify-between">
+          <div className="mb-4 flex items-center justify-between">
             <h3 className="">{currentQuestion?.title}</h3>
             {!questionId && (
               <Link
@@ -171,12 +160,14 @@ export function QuestionWrapper({
                 href={`/p/${data.data.id}`}
                 target="_blank"
               >
-                <span>题链</span>
+                <span>查看题链</span>
               </Link>
             )}
           </div>
 
-          <p className="mb-6">{currentQuestion?.content}</p>
+          {currentQuestion?.content && (
+            <p className="mb-4">{currentQuestion?.content}</p>
+          )}
 
           {currentQuestion?.id && (
             <AnswerWrapper
@@ -244,7 +235,9 @@ export function QuestionWrapper({
         </div>
       )}
 
-      <CommentWrapper />
+      {currentQuestion?.id && (
+        <CommentWrapper session={session} questionId={currentQuestion?.id} />
+      )}
       <Toaster />
     </div>
   );

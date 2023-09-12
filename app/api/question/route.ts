@@ -4,9 +4,13 @@ import {
   createQuestion,
   getQuestionById,
   getQuestionByIndex,
+  getQuestionByTitle,
+  getQuestions,
   updateQuestionDislikes,
   updateQuestionLikes,
 } from "@/lib/db/question";
+import { getServerSession } from "next-auth";
+import { authOptions } from "../auth/[...nextauth]/route";
 
 export async function GET(
   req: NextRequest,
@@ -16,15 +20,29 @@ export async function GET(
     const { searchParams } = new URL(req.url);
     const index = searchParams.get("i");
     const id = searchParams.get("id");
-    if (!index) return NextResponse.json("empty index");
+    const title = searchParams.get("title");
+    const limit = searchParams.get("limit");
 
-    if (!id) {
+    // if (!index) return NextResponse.json("empty index");
+    if (limit) {
+      const data = await getQuestions(Number(limit));
+      return NextResponse.json(data);
+    }
+
+    if (index && !id && !title) {
       const data = await getQuestionByIndex(Number(index));
       return NextResponse.json(data);
-    } else {
+    }
+    if (id && index && !title) {
       const data = await getQuestionById(id);
       return NextResponse.json(data);
     }
+    if (title && !index && !id) {
+      const data = await getQuestionByTitle(title);
+      return NextResponse.json(data);
+    }
+
+    return NextResponse.json("empty param");
   } catch (error) {
     return NextResponse.json(error);
   }
@@ -35,15 +53,53 @@ export async function POST(
   { params }: { params: Record<string, string | string | undefined[]> },
 ) {
   try {
-    const { title, content, answers } = await req.json();
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json({
+        data: null,
+        code: 401,
+        msg: "未登录",
+      });
+    }
+    if (session?.user && session?.user.email !== "3224266014@qq.com") {
+      return NextResponse.json({
+        data: null,
+        code: 401,
+        msg: "未授权",
+      });
+    }
 
-    createQuestion(title, content).then(async (question) => {
-      const createdAnswers = await createAnswers(question.id, answers);
-      console.log("创建的答案记录:", createdAnswers);
-    });
-    return NextResponse.json("success");
+    const { title, content, answers } = await req.json();
+    if (!title || !answers) {
+      return NextResponse.json({
+        data: null,
+        code: 403,
+        msg: "empty `title` or `answers`",
+      });
+    }
+
+    const res = await createQuestion(title, content);
+    if (res) {
+      const createdAnswers = await createAnswers(res.id, answers);
+      if (createdAnswers)
+        return NextResponse.json({
+          data: res.id,
+          code: 200,
+          msg: "success",
+        });
+    } else {
+      return NextResponse.json({
+        data: null,
+        code: 402,
+        msg: "something wrong",
+      });
+    }
   } catch {
-    return NextResponse.json("error");
+    return NextResponse.json({
+      data: null,
+      code: 500,
+      msg: "error",
+    });
   }
 }
 

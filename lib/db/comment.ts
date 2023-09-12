@@ -3,14 +3,16 @@ import prisma from "./prisma";
 
 export async function createComment(
   userId: string,
+  userName: string,
   questionId: string,
   content: string,
 ) {
   const comment = await prisma.comment.create({
     data: {
-      content,
       userId,
       questionId,
+      userName,
+      content,
       likes: 0,
       dislikes: 0,
       createdAt: new Date(),
@@ -21,6 +23,8 @@ export async function createComment(
   return comment;
 }
 export async function deleteComment(id: string) {
+  console.log("准备删除", id);
+
   const res = prisma.comment.delete({
     where: {
       id,

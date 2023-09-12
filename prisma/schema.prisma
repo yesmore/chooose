@@ -88,6 +88,7 @@ model Comment {
   id         String @id @default(auto()) @map("_id") @db.ObjectId
   questionId String @db.ObjectId
   userId     String @db.ObjectId
+  userName   String @default("")
   content    String
   likes      Int    @default(0)
   dislikes   Int    @default(0)

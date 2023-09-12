@@ -20,6 +20,7 @@ export interface Comment {
   id?: string;
   questionId: string;
   userId: string;
+  userName: string;
 
   content: string;
   likes: number;
@@ -28,4 +29,12 @@ export interface Comment {
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;
+}
+
+export interface User {
+  id?: string;
+  name?: string;
+  email: string;
+  emailVerified: string;
+  image?: string;
 }

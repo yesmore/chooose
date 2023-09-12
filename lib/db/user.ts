@@ -4,3 +4,9 @@ import prisma from "./prisma";
 export const getUsers = async () => {
   return await prisma.user.findMany();
 };
+
+export const getUserByEmail = async (email: string) => {
+  return await prisma.user.findFirst({
+    where: { email },
+  });
+};

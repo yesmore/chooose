@@ -16,7 +16,7 @@ export async function createQuestion(title: string, content: string) {
     data: {
       title: title,
       content: content,
-      likes: 1,
+      likes: 0,
       dislikes: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
@@ -143,6 +143,17 @@ export async function getQuestionById(id: string) {
 
   return { count: documentCount, data: res };
 }
+export async function getQuestionByTitle(title: string) {
+  const documentCount = await prisma.question.count();
+
+  if (documentCount <= 0) return null;
+
+  const res = await prisma.question.findFirst({
+    where: { title },
+  });
+
+  return { count: documentCount, data: res };
+}
 export async function getQuestionByExcludedIds(ids: string[]) {
   const documentCount = await prisma.question.count({
     where: {
@@ -167,6 +178,17 @@ export async function getQuestionByExcludedIds(ids: string[]) {
       },
     },
     skip: randomIndex,
+  });
+
+  return res;
+}
+export async function getQuestions(limit: number) {
+  const documentCount = await prisma.question.count();
+
+  if (documentCount <= 0) return null;
+
+  const res = await prisma.question.findMany({
+    where: {},
   });
 
   return res;
