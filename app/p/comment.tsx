@@ -102,7 +102,10 @@ export default function CommentWrapper({
         <div className="pb-4 ">
           {commentList &&
             commentList.map((item, index) => (
-              <div className="border-b border-slate-100 py-2 px-2">
+              <div
+                key={item.id}
+                className="border-b border-slate-100 py-2 px-2"
+              >
                 <div className="flex items-center justify-between text-sm font-medium text-slate-600">
                   <div className="flex items-center gap-2">
                     <Image
