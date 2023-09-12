@@ -24,6 +24,6 @@ export async function GET(
 
     return NextResponse.json(user);
   } catch (error) {
-    return NextResponse.json("服务器出错了");
+    return NextResponse.json(error);
   }
 }
