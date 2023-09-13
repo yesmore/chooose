@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import { Question } from "../types/question";
 import prisma from "./prisma";
 
@@ -14,6 +13,8 @@ import prisma from "./prisma";
 export async function createQuestion(title: string, content: string) {
   const question = await prisma.question.create({
     data: {
+      userId: "",
+      userName: "",
       title: title,
       content: content,
       likes: 0,

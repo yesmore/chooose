@@ -12,6 +12,8 @@ import {
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
 
+// export const dynamic = "force-dynamic";
+
 export async function GET(
   req: NextRequest,
   { params }: { params: Record<string, string | string | undefined[]> },

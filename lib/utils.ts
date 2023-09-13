@@ -77,3 +77,27 @@ export function isEmail(str: string) {
 export function getAvatarById(id: string) {
   return `https://avatars.dicebear.com/api/micah/${id}.svg`;
 }
+
+export function formatDate(dateString: string) {
+  const sourceDate = new Date(dateString).getTime();
+  const currentDate = new Date().getTime();
+  console.log(sourceDate, currentDate);
+
+  const timeDiff = currentDate - sourceDate;
+  const secondsDiff = Math.floor(timeDiff / 1000); // 计算秒数差
+
+  if (secondsDiff < 60) {
+    return `${secondsDiff}秒前`;
+  } else if (secondsDiff < 3600) {
+    // 不足1小时
+    const minutesDiff = Math.floor(secondsDiff / 60);
+    return `${minutesDiff}分钟前`;
+  } else if (secondsDiff < 86400) {
+    // 不足1天
+    const hoursDiff = Math.floor(secondsDiff / 3600);
+    return `${hoursDiff}小时前`;
+  } else {
+    const daysDiff = Math.floor(secondsDiff / 86400);
+    return `${daysDiff}天前`;
+  }
+}

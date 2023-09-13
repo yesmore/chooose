@@ -4,10 +4,11 @@ import { Session } from "next-auth";
 import { useAnswers } from "./request";
 import { Dispatch, SetStateAction, useEffect, useState } from "react";
 import { fetcher, nFormatter } from "@/lib/utils";
-import { Answer, Question } from "@/lib/types/question";
+import { Answer } from "@/lib/types/question";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
+import WatchButton from "@/components/question/watch-button";
 
 interface UserSelectedQuestion {
   question_id: string;
@@ -20,15 +21,20 @@ export function AnswerWrapper({
   session,
   questionId,
   questionTitle,
+  totalClick,
+  setTotalClick,
 }: {
   session: Session | null;
   questionId: string;
   questionTitle: string;
+  totalClick: number;
+  setTotalClick: Dispatch<SetStateAction<number>>;
 }) {
   const { answers, isLoading } = useAnswers(questionId);
+
   const [currentAnswers, setCurrentAnswers] = useState<Answer[]>();
   const [selectIndex, setSelectIndex] = useState<number>(-1);
-  const [totalClick, setTotalClick] = useState<number>(0);
+  // const [totalClick, setTotalClick] = useState<number>(0);
   const [isUpdatingClick, setIsUpdatingClick] = useState(false);
   const [userSelectedQuestions, setUserSelectedQuestions] = useLocalStorage<
     UserSelectedQuestion[]
@@ -47,6 +53,14 @@ export function AnswerWrapper({
       setTotalClick(answers.reduce((acc, answer) => acc + answer.click, 0));
     }
   }, [answers]);
+
+  useEffect(() => {
+    if (currentAnswers) {
+      setTotalClick(
+        currentAnswers.reduce((acc, answer) => acc + answer.click, 0),
+      );
+    }
+  }, [currentAnswers]);
 
   useEffect(() => {
     if (userSelectedQuestions) {
@@ -124,16 +138,18 @@ export function AnswerWrapper({
         }),
       });
       if (res) {
-        const updatedAnswers = currentAnswers.map((answer) => {
-          if (answer.id === id) {
-            return res;
-          }
-          return answer;
-        });
-        setCurrentAnswers(updatedAnswers);
-        // setExistingQuestionIndex(index);
-        setIsUpdatingClick(false);
         handleSaveSelectedAnswerToLocal(id, index);
+
+        const new_answers = await fetcher<Answer[]>(
+          `/api/answers?id=${questionId}`,
+          {
+            method: "GET",
+          },
+        );
+        if (new_answers) {
+          setCurrentAnswers(new_answers);
+          setIsUpdatingClick(false);
+        }
       }
     }
   };
@@ -171,7 +187,12 @@ export function AnswerWrapper({
         </div>
       )}
       {!isLoading && currentAnswers && (
-        <div className="grid grid-cols-1 gap-4 text-center md:grid-cols-2 ">
+        <div
+          className={
+            "grid grid-cols-1 gap-4 text-center md:grid-cols-2 " +
+            `${currentAnswers.length % 2 !== 0 ? "md:grid-cols-1" : ""}`
+          }
+        >
           {currentAnswers.map((item, index) => (
             <div
               className={generateItemClasses(index)}
@@ -179,8 +200,11 @@ export function AnswerWrapper({
               onClick={() => handleClickAnswerItem(index)}
             >
               <div
-                className="absolute top-0 left-0 h-full rounded-lg bg-gradient-to-br from-pink-400 via-yellow-400 to-blue-400 opacity-25 transition-all duration-1000"
-                style={{ width: `${onCaclePercent(item.click)}` }}
+                className="absolute top-0 left-0 h-full rounded-lg bg-gray-400 opacity-25 transition-all duration-1000"
+                style={{
+                  width: `${onCaclePercent(item.click)}`,
+                  maxWidth: "100%",
+                }}
               />
               <div className="">{item.value}</div>
               <div className="absolute left-1 bottom-1 rounded-lg text-xs text-slate-500 transition-all duration-1000">
@@ -192,10 +216,6 @@ export function AnswerWrapper({
           ))}
         </div>
       )}
-      <div className="float-right mt-3 text-sm">
-        {existingQuestionIndex !== -1 ? "已回答" : "未回答"} / 已选择
-        {nFormatter(totalClick)}次
-      </div>
     </div>
   );
 }

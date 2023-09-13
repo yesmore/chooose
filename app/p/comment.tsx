@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { useComments, useUserInfoByEmail } from "./request";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { fetcher, getAvatarById } from "@/lib/utils";
+import { fetcher, formatDate, getAvatarById } from "@/lib/utils";
 import { Comment } from "@/lib/types/question";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
@@ -18,10 +18,11 @@ export default function CommentWrapper({
   questionId: string;
 }) {
   const [commentList, setCommentList] = useState<Comment[]>([]);
-  const { comments, isLoading } = useComments(questionId, commentList.length);
   const { user } = useUserInfoByEmail(session?.user?.email || "");
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
+
+  const { comments, isLoading } = useComments(questionId, commentList.length);
 
   useEffect(() => {
     if (comments) {
@@ -34,7 +35,7 @@ export default function CommentWrapper({
       toast("登录后评论");
       return;
     }
-    if (!inputComment) {
+    if (inputComment.length === 0) {
       return;
     }
 
@@ -66,7 +67,6 @@ export default function CommentWrapper({
       setIsCreatingComment(false);
       toast(res);
     }
-    console.log(res);
   };
   const handleDeleteComment = async (id: string, email: string) => {
     const res = await fetcher(`/api/comments?id=${id}&email=${email}`, {
@@ -79,20 +79,36 @@ export default function CommentWrapper({
       toast(res);
     }
   };
+  const handleKeydown = (key: string) => {
+    if (key === "Enter") {
+      // handleCreateComment();
+    }
+  };
 
   return (
     <>
-      <div className="mt-8 w-full">
-        <div>
+      <div className="mt-6 w-full">
+        <p className="mb-2 text-sm font-semibold text-slate-500">评论</p>
+        <div className="relative ">
           <textarea
-            className="w-full rounded-md border"
+            className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-gray-100 text-sm placeholder-gray-400 shadow-inner"
             placeholder="支持Markdown语法"
             value={inputComment}
+            rows={4}
+            maxLength={300}
             onChange={(e) => setInputComment(e.target.value)}
+            onKeyDown={(e) => handleKeydown(e.key)}
           />
           <button
             disabled={isCreatingComment || inputComment.length === 0}
-            className="nice-border"
+            className={
+              "absolute right-2 bottom-4 cursor-pointer rounded border px-3 py-1 text-sm text-slate-500 transition-all " +
+              `${
+                inputComment.length > 0
+                  ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+                  : "bg-slate-400 text-slate-100"
+              }`
+            }
             onClick={handleCreateComment}
           >
             {isCreatingComment ? "提交中" : "提交"}
@@ -119,8 +135,9 @@ export default function CommentWrapper({
                   </div>
 
                   <div className="flex items-center gap-2">
-                    <span className=" text-xs text-slate-400">
-                      {item.createdAt}
+                    <span className="text-xs text-slate-400">#{index + 1}</span>
+                    <span className="text-xs text-slate-400">
+                      {formatDate(item.createdAt ?? "")}
                     </span>
                     {item.userId === user?.id && (
                       <Trash2
@@ -132,9 +149,10 @@ export default function CommentWrapper({
                     )}
                   </div>
                 </div>
-                <ReactMarkdown className="my-1 pl-9 text-sm">
-                  {item.content}
-                </ReactMarkdown>
+
+                <div className="my-1 pl-9 text-sm">
+                  <ReactMarkdown>{item.content}</ReactMarkdown>
+                </div>
               </div>
             ))}
         </div>

@@ -62,11 +62,15 @@ model VerificationToken {
 }
 
 model Question {
-  id        String    @id @default(auto()) @map("_id") @db.ObjectId
-  title     String
-  content   String
-  likes     Int       @default(0)
-  dislikes  Int       @default(0)
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  userId   String @db.ObjectId
+  userName String @default("")
+
+  title    String
+  content  String
+  likes    Int    @default(0)
+  dislikes Int    @default(0)
+
   createdAt DateTime
   updatedAt DateTime  @updatedAt
   deletedAt DateTime?

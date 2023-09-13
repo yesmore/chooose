@@ -25,7 +25,7 @@ export function useQuestion(index: number, id?: string) {
 
 export function useAnswers(questionId: string) {
   let api = `/api/answers?id=${questionId}`;
-  const { data, error, isLoading } = useSWR<[Answer]>(api, () =>
+  const { data, error, isLoading } = useSWR<Answer[]>(api, () =>
     fetcher(api, {
       method: "GET",
     }),

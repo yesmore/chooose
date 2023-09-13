@@ -1,74 +1,65 @@
 .Btn {
-  width: 45px;
-  height: 45px;
+  /* transform: scale(0.5); */
+  min-width: 100px;
+  height: 35px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  border: none;
+  border-radius: 5px;
+  overflow: hidden;
+  box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.089);
+  cursor: pointer;
+  background-color: transparent;
+  zoom: 0.5;
+}
+
+.leftContainer {
+  width: 60%;
+  height: 100%;
+  background-color: rgb(24, 142, 238);
   display: flex;
   align-items: center;
   justify-content: center;
-  border: none;
-  background-color: transparent;
-  position: relative;
-  /* overflow: hidden; */
-  border-radius: 7px;
-  cursor: pointer;
-  transition: all 0.3s;
+  gap: 8px;
 }
 
-.svgContainer {
-  width: 100%;
+.leftContainer .like {
+  color: white;
+  font-weight: 500;
+}
+
+.likeCount {
+  width: 40%;
   height: 100%;
   display: flex;
   align-items: center;
   justify-content: center;
-  background-color: transparent;
-  backdrop-filter: blur(4px);
-  letter-spacing: 0.8px;
-  border-radius: 10px;
-  transition: all 0.3s;
-  border: 1px solid rgba(156, 156, 156, 0.466);
+  color: rgb(7, 7, 7);
+  font-weight: 600;
+  position: relative;
+  background-color: rgb(235, 235, 235);
 }
 
-.BG {
+.likeCount::before {
+  height: 8px;
+  width: 8px;
   position: absolute;
   content: "";
-  width: 100%;
-  height: 100%;
-  background: #f09433;
-  background: -moz-linear-gradient(
-    45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
-  );
-  background: -webkit-linear-gradient(
-    45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
-  );
-  background: linear-gradient(
-    45deg,
-    #f09433 0%,
-    #e6683c 25%,
-    #dc2743 50%,
-    #cc2366 75%,
-    #bc1888 100%
-  );
-  filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#f09433', endColorstr='#bc1888',GradientType=1 );
-  z-index: -1;
-  border-radius: 9px;
-  pointer-events: none;
-  transition: all 0.3s;
+  background-color: rgb(235, 235, 235);
+  transform: rotate(45deg);
+  left: -4px;
 }
 
-.Btn:hover .BG {
-  transform: rotate(35deg);
-  transform-origin: bottom;
+.Btn:hover .leftContainer {
+  background-color: rgb(219, 0, 0);
 }
 
-.Btn:hover .svgContainer {
-  background-color: rgba(156, 156, 156, 0.466);
+.Btn:active .leftContainer {
+  background-color: rgb(201, 0, 0);
+}
+
+.Btn:active .leftContainer svg {
+  transform: scale(1.15);
+  transform-origin: top;
 }

@@ -1,9 +1,13 @@
 export interface Question {
   id?: string;
+  userId: string;
+  userName: string;
+
   title: string;
   content: string;
   likes: number;
   dislikes: number;
+
   createdAt?: string;
   updatedAt?: string;
   deletedAt?: string;

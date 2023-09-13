@@ -2,12 +2,11 @@
 
 import { useState } from "react";
 import { signOut } from "next-auth/react";
-import { LogOut, Pencil } from "lucide-react";
+import { LogOut, UserCog, History } from "lucide-react";
 import Popover from "@/components/shared/popover";
 import Image from "next/image";
 import { Session } from "next-auth";
 import Link from "next/link";
-import { UserStory } from "@/lib/types/story";
 import { useUserInfoByEmail } from "@/pages/p/request";
 import { getAvatarById } from "@/lib/utils";
 
@@ -37,8 +36,13 @@ export default function UserDropdown({ session }: { session: Session }) {
             <hr className="my-2" />
 
             <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
-              <Pencil className="h-4 w-4" />
+              <UserCog className="h-4 w-4" />
               <p className="text-sm">修改昵称</p>
+            </button>
+
+            <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
+              <History className="h-4 w-4" />
+              <p className="text-sm">历史阅读</p>
             </button>
 
             <button
