@@ -5,17 +5,21 @@ import { useComments, useUserInfoByEmail } from "./request";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { fetcher, formatDate, getAvatarById } from "@/lib/utils";
-import { Comment } from "@/lib/types/question";
+import { Answer, Comment } from "@/lib/types/question";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { Trash2 } from "lucide-react";
+import { LoadingDots } from "@/components/shared/icons";
+import { Answer_Letters } from "@/lib/constants";
 
 export default function CommentWrapper({
   session,
   questionId,
+  currentAnswers,
 }: {
   session: Session | null;
   questionId: string;
+  currentAnswers?: Answer[];
 }) {
   const [commentList, setCommentList] = useState<Comment[]>([]);
   const { user } = useUserInfoByEmail(session?.user?.email || "");
@@ -88,11 +92,14 @@ export default function CommentWrapper({
   return (
     <>
       <div className="mt-6 w-full">
-        <p className="mb-2 text-sm font-semibold text-slate-500">评论</p>
+        <p className="mb-2 text-sm font-semibold text-slate-500">评论吧</p>
+
         <div className="relative ">
           <textarea
-            className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-gray-100 text-sm placeholder-gray-400 shadow-inner"
-            placeholder="支持Markdown语法"
+            className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-[#f8f8f8a1] text-sm placeholder-gray-400 shadow-inner"
+            placeholder={`${
+              Answer_Letters[currentAnswers?.length || 0]
+            }: 你的答案 (支持Markdown语法)`}
             value={inputComment}
             rows={4}
             maxLength={300}
@@ -102,7 +109,7 @@ export default function CommentWrapper({
           <button
             disabled={isCreatingComment || inputComment.length === 0}
             className={
-              "absolute right-2 bottom-4 cursor-pointer rounded border px-3 py-1 text-sm text-slate-500 transition-all " +
+              "absolute right-2 bottom-4 w-16 cursor-pointer rounded border px-3 py-1 text-sm text-slate-500 transition-all " +
               `${
                 inputComment.length > 0
                   ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
@@ -111,7 +118,7 @@ export default function CommentWrapper({
             }
             onClick={handleCreateComment}
           >
-            {isCreatingComment ? "提交中" : "提交"}
+            {isCreatingComment ? <LoadingDots color="#fff" /> : "提交"}
           </button>
         </div>
 
@@ -119,8 +126,9 @@ export default function CommentWrapper({
           {commentList &&
             commentList.map((item, index) => (
               <div
+                id={`comment-${item.id}`}
                 key={item.id}
-                className="border-b border-slate-100 py-2 px-2"
+                className="border-b border-slate-200 py-2 px-2"
               >
                 <div className="flex items-center justify-between text-sm font-medium text-slate-600">
                   <div className="flex items-center gap-2">

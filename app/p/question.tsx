@@ -4,7 +4,7 @@ import { Session } from "next-auth";
 import { useQuestion } from "./request";
 import { fetcher, formatDate } from "@/lib/utils";
 import { useEffect, useState } from "react";
-import { Question } from "@/lib/types/question";
+import { Answer, Question } from "@/lib/types/question";
 import { AnswerWrapper } from "./answers";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
@@ -35,6 +35,7 @@ export function QuestionWrapper({
   const [isLike, setIslike] = useState(false);
   const [isDislike, setIsDislike] = useState(false);
   const [totalClick, setTotalClick] = useState<number>(0);
+  const [currentAnswers, setCurrentAnswers] = useState<Answer[]>();
 
   const { data, isLoading, isError } = useQuestion(
     cacheQuestionIndex,
@@ -130,7 +131,7 @@ export function QuestionWrapper({
 
   return (
     <div
-      className="mx-auto max-w-[90%] rounded-md border border-slate-100 bg-gray-50 p-3 shadow-md md:max-w-[70%]"
+      className="mx-auto max-w-[90%] rounded-md border border-slate-100 bg-[#f3f3f3] p-3 shadow-md md:max-w-[70%]"
       style={{
         animationDelay: "0.15s",
         animationFillMode: "forwards",
@@ -160,7 +161,7 @@ export function QuestionWrapper({
             <h3 className="">
               {currentQuestion?.title}{" "}
               <span className="text-sm font-medium text-slate-400">
-                #{cacheQuestionIndex}
+                #{cacheQuestionIndex + 1}
               </span>
             </h3>
             {!questionId ? (
@@ -194,6 +195,8 @@ export function QuestionWrapper({
               questionId={currentQuestion.id}
               questionTitle={currentQuestion.title}
               session={session}
+              currentAnswers={currentAnswers}
+              setCurrentAnswers={setCurrentAnswers}
               totalClick={totalClick}
               setTotalClick={setTotalClick}
             />
@@ -228,25 +231,31 @@ export function QuestionWrapper({
             </button>
           </div>
 
-          <div className="flex items-center gap-2">
-            <button
-              className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
-              onClick={handlePrevQuestion}
-            >
-              <ArrowLeft className="w-5" />
-            </button>
-            <button
-              className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
-              onClick={handleNextQuestion}
-            >
-              <ArrowRight className="w-5" />
-            </button>
-          </div>
+          {!questionId && (
+            <div className="flex items-center gap-2">
+              <button
+                className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
+                onClick={handlePrevQuestion}
+              >
+                <ArrowLeft className="w-5" />
+              </button>
+              <button
+                className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
+                onClick={handleNextQuestion}
+              >
+                <ArrowRight className="w-5" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
 
       {currentQuestion?.id && (
-        <CommentWrapper session={session} questionId={currentQuestion?.id} />
+        <CommentWrapper
+          session={session}
+          questionId={currentQuestion?.id}
+          currentAnswers={currentAnswers}
+        />
       )}
       <Toaster />
     </div>

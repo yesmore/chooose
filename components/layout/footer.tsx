@@ -2,6 +2,7 @@
 
 import Link from "next/link";
 import Image from "next/image";
+import { Github } from "../shared/icons";
 
 export default function Footer() {
   return (
@@ -12,10 +13,10 @@ export default function Footer() {
       >
         🤡
       </Link>
-      <div className="mt-2 text-sm">
-        <Link href="/privacy">Privacy policy</Link>
+      <div className="mt-2 flex items-center justify-center text-sm">
+        <Link href="/privacy">隐私政策</Link>
         <span className="mx-2">‣</span>
-        <Link href="mailto:songsonghhhh@gmail.com">Contact</Link>
+        <Link href="mailto:songsonghhhh@gmail.com">联系我们</Link>
         <span className="mx-2">‣</span>
         <Link
           className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-purple-500 bg-clip-text font-semibold text-transparent "
@@ -23,6 +24,14 @@ export default function Footer() {
           target="_blank"
         >
           Discord
+        </Link>
+        <span className="mx-2">‣</span>
+        <Link
+          className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-purple-500 bg-clip-text font-semibold text-transparent "
+          href="https://github.com/yesmore/chooose"
+          target="_blank"
+        >
+          <Github className="h-4 w-4 text-slate-500" />
         </Link>
       </div>
       <div className="mt-2 flex items-center justify-center text-sm">

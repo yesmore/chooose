@@ -7,7 +7,7 @@ import { Suspense } from "react";
 import Script from "next/script";
 
 export const metadata = {
-  title: "Chooose - 选择困难症治疗中心",
+  title: "选择困难症治疗中心 | Chooose",
   description: "...",
   metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",

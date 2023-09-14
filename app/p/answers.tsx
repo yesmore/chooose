@@ -9,6 +9,7 @@ import useLocalStorage from "@/lib/hooks/use-local-storage";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
 import WatchButton from "@/components/question/watch-button";
+import { Answer_Letters } from "@/lib/constants";
 
 interface UserSelectedQuestion {
   question_id: string;
@@ -21,18 +22,22 @@ export function AnswerWrapper({
   session,
   questionId,
   questionTitle,
+  currentAnswers,
+  setCurrentAnswers,
   totalClick,
   setTotalClick,
 }: {
   session: Session | null;
   questionId: string;
   questionTitle: string;
+  currentAnswers?: Answer[];
+  setCurrentAnswers: Dispatch<SetStateAction<Answer[] | undefined>>;
   totalClick: number;
   setTotalClick: Dispatch<SetStateAction<number>>;
 }) {
   const { answers, isLoading } = useAnswers(questionId);
 
-  const [currentAnswers, setCurrentAnswers] = useState<Answer[]>();
+  // const [currentAnswers, setCurrentAnswers] = useState<Answer[]>();
   const [selectIndex, setSelectIndex] = useState<number>(-1);
   // const [totalClick, setTotalClick] = useState<number>(0);
   const [isUpdatingClick, setIsUpdatingClick] = useState(false);
@@ -41,11 +46,6 @@ export function AnswerWrapper({
   >("user-selected-questions", []);
   const [existingQuestionIndex, setExistingQuestionIndex] =
     useState<number>(-1);
-
-  // useEffect(() => {
-  //   setSelectIndex(-1);
-  // setExistingQuestionIndex(-1);
-  // }, [questionId]);
 
   useEffect(() => {
     if (answers) {
@@ -210,7 +210,10 @@ export function AnswerWrapper({
               <div className="absolute left-1 bottom-1 rounded-lg text-xs text-slate-500 transition-all duration-1000">
                 {isUpdatingClick || totalClick === 0
                   ? ""
-                  : onCaclePercent(item.click)}
+                  : `${onCaclePercent(item.click)}`}
+              </div>
+              <div className="absolute left-1 top-1 rounded-lg text-xs text-slate-500 transition-all duration-1000">
+                {Answer_Letters[index % Answer_Letters.length]}
               </div>
             </div>
           ))}

@@ -4,3 +4,25 @@ export const Active_Path = ["/", "/stories", "/workspace"];
 
 export const DEFAULT_WOKER_AVATAR =
   "https://gcloud-1303456836.cos.ap-chengdu.myqcloud.com/gcloud/avatars/21.png";
+
+export const Answer_Letters = [
+  "A",
+  "B",
+  "C",
+  "D",
+  "E",
+  "F",
+  "G",
+  "H",
+  "I",
+  "J",
+  "K",
+  "L",
+  "M",
+  "N",
+  "O",
+  "P",
+  "Q",
+  "R",
+  "S",
+];

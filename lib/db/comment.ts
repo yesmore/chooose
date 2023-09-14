@@ -17,17 +17,19 @@ export async function createComment(
       dislikes: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
+      deletedAt: null,
     },
   });
 
   return comment;
 }
 export async function deleteComment(id: string) {
-  console.log("准备删除", id);
-
-  const res = prisma.comment.delete({
+  const res = prisma.comment.update({
     where: {
       id,
+    },
+    data: {
+      deletedAt: new Date(),
     },
   });
 
@@ -51,6 +53,7 @@ export async function getComments(questionId: string) {
   const comment = await prisma.comment.findMany({
     where: {
       questionId,
+      deletedAt: null,
     },
   });
 
