@@ -79,7 +79,8 @@ export function QuestionWrapper({
     setCanUpdateQuestion(true);
     setCacheQuestionIndex(cacheQuestionIndex - 1);
   };
-  const handleCleat = () => {
+
+  const handleClear = () => {
     setCanUpdateQuestion(true);
     setCacheQuestionIndex(0);
   };
@@ -131,11 +132,8 @@ export function QuestionWrapper({
 
   return (
     <div
-      className="mx-auto max-w-[90%] rounded-md border border-slate-100 bg-[#f3f3f3] p-3 shadow-md md:max-w-[70%]"
-      style={{
-        animationDelay: "0.15s",
-        animationFillMode: "forwards",
-      }}
+      className="mx-auto mb-auto max-w-[90%] rounded-md border border-slate-100 bg-[#f3f3f3] p-3 shadow-md md:max-w-[80%]"
+      style={{ minHeight: "calc(100vh - 70px)" }}
     >
       {isLoading && (
         <div className="">
@@ -153,6 +151,7 @@ export function QuestionWrapper({
           </div>
         </div>
       )}
+
       {!isLoading && !data && <NotFound />}
 
       {data && !isLoading && (
@@ -177,13 +176,14 @@ export function QuestionWrapper({
                 href="/p"
                 className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
               >
-                查看更多
+                查看更多疗程
               </Link>
             )}
           </div>
 
           <div className="mb-3 text-xs font-medium text-slate-500">
-            匿名用户 {formatDate(currentQuestion?.createdAt || "")}发布
+            {currentQuestion?.userName}{" "}
+            {formatDate(currentQuestion?.createdAt || "")}发布
           </div>
 
           {currentQuestion?.content && (
@@ -231,7 +231,7 @@ export function QuestionWrapper({
             </button>
           </div>
 
-          {!questionId && (
+          {!questionId ? (
             <div className="flex items-center gap-2">
               <button
                 className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
@@ -246,6 +246,13 @@ export function QuestionWrapper({
                 <ArrowRight className="w-5" />
               </button>
             </div>
+          ) : (
+            <Link
+              href="/"
+              className="rounded p-1 text-sm text-slate-600 transition-all hover:border-slate-200 hover:shadow"
+            >
+              分享自「选择困难症治疗中心」
+            </Link>
           )}
         </div>
       </div>

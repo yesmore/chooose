@@ -84,7 +84,7 @@ export function AnswerWrapper({
     `${((itemClick / totalClick) * 100).toFixed(2)}%`;
 
   const generateItemClasses = (index: number) => `
-    relative cursor-pointer text-sm rounded-lg pt-4 pb-5 shadow transition-all px-3 hover:bg-slate-400 hover:text-white
+    relative cursor-pointer text-sm rounded-lg pt-5 pb-5 shadow transition-all px-3 hover:bg-slate-400 hover:text-white
      ${selectIndex === index ? "bg-slate-300" : "bg-gray-50"}
      ${isUpdatingClick && selectIndex === index ? "animate-pulse" : ""}
   `;
@@ -206,7 +206,7 @@ export function AnswerWrapper({
                   maxWidth: "100%",
                 }}
               />
-              <div className="">{item.value}</div>
+              <div>{item.value}</div>
               <div className="absolute left-1 bottom-1 rounded-lg text-xs text-slate-500 transition-all duration-1000">
                 {isUpdatingClick || totalClick === 0
                   ? ""

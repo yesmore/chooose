@@ -9,11 +9,17 @@ export async function GET(
 ) {
   const { searchParams } = new URL(req.url);
   const id = searchParams.get("id");
+  const page = searchParams.get("page");
+  const pageSize = searchParams.get("pageSize");
   if (!id) return NextResponse.json("empty id");
 
-  const comments = await getComments(id);
+  const { comments, total } = await getComments(
+    id,
+    Number(page),
+    Number(pageSize),
+  );
 
-  return NextResponse.json(comments);
+  return NextResponse.json({ comments, total });
 }
 
 export async function POST(

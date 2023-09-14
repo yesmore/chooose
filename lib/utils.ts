@@ -81,7 +81,6 @@ export function getAvatarById(id: string) {
 export function formatDate(dateString: string) {
   const sourceDate = new Date(dateString).getTime();
   const currentDate = new Date().getTime();
-  console.log(sourceDate, currentDate);
 
   const timeDiff = currentDate - sourceDate;
   const secondsDiff = Math.floor(timeDiff / 1000); // 计算秒数差
@@ -100,4 +99,8 @@ export function formatDate(dateString: string) {
     const daysDiff = Math.floor(secondsDiff / 86400);
     return `${daysDiff}天前`;
   }
+}
+
+export function generateName(id: string) {
+  return `未知病友${id.slice(-6)}`;
 }

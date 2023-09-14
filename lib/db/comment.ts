@@ -49,13 +49,26 @@ export async function updateComment(data: Comment) {
 
   return updatedQuestion;
 }
-export async function getComments(questionId: string) {
-  const comment = await prisma.comment.findMany({
+export async function getComments(
+  questionId: string,
+  page: number,
+  pageSize: number,
+) {
+  const total = await prisma.comment.count({
     where: {
       questionId,
       deletedAt: null,
     },
   });
 
-  return comment;
+  const comments = await prisma.comment.findMany({
+    where: {
+      questionId,
+      deletedAt: null,
+    },
+    skip: page * pageSize,
+    take: pageSize,
+  });
+
+  return { comments, total };
 }

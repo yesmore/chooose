@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { signOut } from "next-auth/react";
 import { LogOut, UserCog, History } from "lucide-react";
 import Popover from "@/components/shared/popover";
@@ -8,9 +8,16 @@ import Image from "next/image";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { useUserInfoByEmail } from "@/pages/p/request";
-import { getAvatarById } from "@/lib/utils";
+import { generateName, getAvatarById } from "@/lib/utils";
+import { useEditNicknameModal } from "./edit-nickname-modal";
 
-export default function UserDropdown({ session }: { session: Session }) {
+export default function UserDropdown({
+  session,
+  setShowEditModal,
+}: {
+  session: Session;
+  setShowEditModal: Dispatch<SetStateAction<boolean>>;
+}) {
   const { email, image } = session?.user || {};
   const { user } = useUserInfoByEmail(session?.user?.email || "");
   const [openPopover, setOpenPopover] = useState(false);
@@ -25,7 +32,8 @@ export default function UserDropdown({ session }: { session: Session }) {
             {user && (
               <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
                 <p className="truncate font-semibold text-slate-700">
-                  {user?.name || `匿名用户${user?.id?.slice(-6)}`}
+                  {user?.name || `匿名用户${generateName(user.id || "")}`}#
+                  {user?.id?.slice(-6)}
                 </p>
               </button>
             )}
@@ -35,15 +43,21 @@ export default function UserDropdown({ session }: { session: Session }) {
 
             <hr className="my-2" />
 
-            <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
+            <button
+              className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"
+              onClick={() => {
+                setShowEditModal(true);
+                setOpenPopover(false);
+              }}
+            >
               <UserCog className="h-4 w-4" />
               <p className="text-sm">修改昵称</p>
             </button>
 
-            <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
+            {/* <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
               <History className="h-4 w-4" />
               <p className="text-sm">历史阅读</p>
-            </button>
+            </button> */}
 
             <button
               className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"

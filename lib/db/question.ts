@@ -1,20 +1,16 @@
 import { Question } from "../types/question";
 import prisma from "./prisma";
 
-/**
- createQuestion()
-  .then(async (question) => {
-    console.log('创建的问题记录:', question);
-    const answerContents = ['答案1内容', '答案2内容', '答案3内容', '答案4内容'];
-    const createdAnswers = await createAnswers(question.id, answerContents);
-    console.log('创建的答案记录:', createdAnswers);
-  })
- */
-export async function createQuestion(title: string, content: string) {
+export async function createQuestion(
+  title: string,
+  content: string,
+  userId: string,
+  userName: string,
+) {
   const question = await prisma.question.create({
     data: {
-      userId: "",
-      userName: "",
+      userId: userId,
+      userName: userName,
       title: title,
       content: content,
       likes: 0,

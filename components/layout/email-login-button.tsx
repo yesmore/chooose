@@ -4,7 +4,7 @@ import { KeyboardEventHandler, useState } from "react";
 import { signIn } from "next-auth/react";
 import toast, { Toaster } from "react-hot-toast";
 import { isEmail } from "@/lib/utils";
-import { LoadingDots } from "./shared/icons";
+import { LoadingDots } from "../shared/icons";
 import { usePathname } from "next/navigation";
 
 export default function EmailButton() {

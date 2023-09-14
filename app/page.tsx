@@ -41,15 +41,15 @@ export default async function Home() {
               </span>
             </p>
 
-            <p className="mt-6 mb-10 animate-fade-up text-slate-500 ">
+            <p className="mt-6 mb-14 animate-fade-up text-slate-500 ">
               这里收录了一些奇奇怪怪的“选择题”，你可以随意选择
             </p>
 
             <Link
               href="/p"
-              className=" rounded-md bg-blue-400 px-12 py-3 text-white shadow transition-all hover:opacity-70 hover:shadow-inner"
+              className=" rounded-md bg-slate-800 px-14 py-3 text-white shadow-lg transition-all hover:opacity-70 hover:shadow-inner"
             >
-              开始治疗
+              现在加入疗程
             </Link>
           </div>
           <About />

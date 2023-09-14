@@ -11,6 +11,8 @@ import {
 } from "@/lib/db/question";
 import { getServerSession } from "next-auth";
 import { authOptions } from "../auth/[...nextauth]/route";
+import { getUserByEmail } from "@/lib/db/user";
+import { generateName } from "@/lib/utils";
 
 // export const dynamic = "force-dynamic";
 
@@ -36,6 +38,9 @@ export async function GET(
       return NextResponse.json(data);
     }
     if (id && index && !title) {
+      if (id.length < 12) {
+        return NextResponse.json("invalid id");
+      }
       const data = await getQuestionById(id);
       return NextResponse.json(data);
     }
@@ -70,6 +75,14 @@ export async function POST(
         msg: "未授权",
       });
     }
+    const user = await getUserByEmail(session?.user.email || "");
+
+    if (!user)
+      return NextResponse.json({
+        data: null,
+        code: 402,
+        msg: "找不到用户",
+      });
 
     const { title, content, answers } = await req.json();
     if (!title || !answers) {
@@ -80,7 +93,12 @@ export async function POST(
       });
     }
 
-    const res = await createQuestion(title, content);
+    const res = await createQuestion(
+      title,
+      content,
+      user.id,
+      generateName(user.id),
+    );
     if (res) {
       const createdAnswers = await createAnswers(res.id, answers);
       if (createdAnswers)

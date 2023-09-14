@@ -54,16 +54,24 @@ export function useLimitQuestion(limit: string) {
   };
 }
 
-export function useComments(questionId: string, length: number) {
-  let api = `/api/comments?id=${questionId}&content=${length}`;
-  const { data, error, isLoading } = useSWR<Comment[]>(api, () =>
+export interface CommentsResp {
+  comments: Comment[];
+  total: number;
+}
+export function useComments(
+  questionId: string,
+  page: number,
+  pageSize: number = 2,
+) {
+  let api = `/api/comments?id=${questionId}&page=${page}&pageSize=${pageSize}`;
+  const { data, error, isLoading } = useSWR<CommentsResp>(api, () =>
     fetcher(api, {
       method: "GET",
     }),
   );
 
   return {
-    comments: data,
+    data,
     isLoading,
     isError: error,
   };

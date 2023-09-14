@@ -7,15 +7,17 @@ import { useSignInModal } from "./sign-in-modal";
 import UserDropdown from "./user-dropdown";
 import { Session } from "next-auth";
 import { Suspense } from "react";
+import { useEditNicknameModal } from "./edit-nickname-modal";
 
 export default function NavBar({ session }: { session: Session | null }) {
-  // const { users } = useUserList();
   const { SignInModal, setShowSignInModal } = useSignInModal();
+  const { EditModal, setShowEditModal } = useEditNicknameModal(session);
   const scrolled = useScroll(50);
 
   return (
     <>
       <SignInModal />
+      <EditModal />
       <div
         className={`fixed top-0 flex w-full justify-center ${
           scrolled
@@ -58,7 +60,10 @@ export default function NavBar({ session }: { session: Session | null }) {
           <Suspense fallback="...">
             <div>
               {session ? (
-                <UserDropdown session={session} />
+                <UserDropdown
+                  session={session}
+                  setShowEditModal={setShowEditModal}
+                />
               ) : (
                 <button
                   className="nice-border rounded-full border border-gray-100 text-sm hover:border-gray-800"

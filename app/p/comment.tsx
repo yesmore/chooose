@@ -4,11 +4,17 @@ import { Session } from "next-auth";
 import { useComments, useUserInfoByEmail } from "./request";
 import { useEffect, useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
-import { fetcher, formatDate, getAvatarById } from "@/lib/utils";
+import {
+  fetcher,
+  formatDate,
+  generateName,
+  getAvatarById,
+  nFormatter,
+} from "@/lib/utils";
 import { Answer, Comment } from "@/lib/types/question";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
-import { Trash2 } from "lucide-react";
+import { ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
 import { LoadingDots } from "@/components/shared/icons";
 import { Answer_Letters } from "@/lib/constants";
 
@@ -25,14 +31,20 @@ export default function CommentWrapper({
   const { user } = useUserInfoByEmail(session?.user?.email || "");
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
+  const [currentPage, setCurrentPage] = useState(0);
+  const [pageSize, setPageSize] = useState(10);
 
-  const { comments, isLoading } = useComments(questionId, commentList.length);
+  const { data, isLoading } = useComments(questionId, currentPage, pageSize);
 
   useEffect(() => {
-    if (comments) {
-      setCommentList(comments);
+    if (data && data.comments) {
+      setCommentList(data.comments);
     }
-  }, [comments]);
+  }, [data, currentPage, questionId]);
+
+  useEffect(() => {
+    setCurrentPage(0);
+  }, [questionId]);
 
   const handleCreateComment = async () => {
     if (!session?.user || !user) {
@@ -48,7 +60,7 @@ export default function CommentWrapper({
       method: "POST",
       body: JSON.stringify({
         userId: user.id,
-        userName: user.name || `匿名用户${user.id?.slice(-6)}`,
+        userName: user.name || generateName(user.id || ""),
         questionId,
         content: inputComment,
       }),
@@ -88,13 +100,25 @@ export default function CommentWrapper({
       // handleCreateComment();
     }
   };
+  const handlePrevComment = () => {
+    if (currentPage > 0) {
+      setCurrentPage(currentPage - 1);
+    }
+  };
+  const handleNextComment = () => {
+    if (data && pageSize * currentPage < data.total - 1) {
+      setCurrentPage(currentPage + 1);
+    }
+  };
 
   return (
     <>
       <div className="mt-6 w-full">
-        <p className="mb-2 text-sm font-semibold text-slate-500">评论吧</p>
+        <p className="mb-2 text-sm font-semibold text-slate-500">
+          病友评论吧{data && data?.total > 0 && `(${nFormatter(data.total)})`}
+        </p>
 
-        <div className="relative ">
+        <div className="relative">
           <textarea
             className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-[#f8f8f8a1] text-sm placeholder-gray-400 shadow-inner"
             placeholder={`${
@@ -122,47 +146,63 @@ export default function CommentWrapper({
           </button>
         </div>
 
-        <div className="py-4 ">
-          {commentList &&
-            commentList.map((item, index) => (
-              <div
-                id={`comment-${item.id}`}
-                key={item.id}
-                className="border-b border-slate-200 py-2 px-2"
-              >
-                <div className="flex items-center justify-between text-sm font-medium text-slate-600">
-                  <div className="flex items-center gap-2">
-                    <Image
-                      alt={"avatar"}
-                      src={getAvatarById(item.userId)}
-                      width={25}
-                      height={25}
-                      className=" border border-slate-600"
-                    />
-                    <span> {item.userName}</span>
-                  </div>
-
-                  <div className="flex items-center gap-2">
-                    <span className="text-xs text-slate-400">#{index + 1}</span>
-                    <span className="text-xs text-slate-400">
-                      {formatDate(item.createdAt ?? "")}
-                    </span>
-                    {item.userId === user?.id && (
-                      <Trash2
-                        className=" h-4 w-4 cursor-pointer text-slate-400"
-                        onClick={() =>
-                          handleDeleteComment(item.id || "", user.email)
-                        }
-                      />
-                    )}
-                  </div>
+        {commentList &&
+          commentList.map((item, index) => (
+            <div
+              id={`comment-${item.id}`}
+              key={item.id}
+              className="border-b border-slate-200 py-2 px-2"
+            >
+              <div className="flex items-center justify-between text-sm font-medium text-slate-600">
+                <div className="flex items-center gap-2">
+                  <Image
+                    alt={"avatar"}
+                    src={getAvatarById(item.userId)}
+                    width={25}
+                    height={25}
+                    className=" border border-slate-600"
+                  />
+                  <span> {item.userName}</span>
                 </div>
 
-                <div className="my-1 pl-9 text-sm">
-                  <ReactMarkdown>{item.content}</ReactMarkdown>
+                <div className="flex items-center gap-2">
+                  <span className="text-xs text-slate-400">#{index + 1}</span>
+                  <span className="text-xs text-slate-400">
+                    {formatDate(item.createdAt ?? "")}
+                  </span>
+                  {item.userId === user?.id && (
+                    <Trash2
+                      className=" h-4 w-4 cursor-pointer text-slate-400"
+                      onClick={() =>
+                        handleDeleteComment(item.id || "", user.email)
+                      }
+                    />
+                  )}
                 </div>
               </div>
-            ))}
+
+              <div className="my-1 pl-9 text-sm">
+                <ReactMarkdown>{item.content}</ReactMarkdown>
+              </div>
+            </div>
+          ))}
+
+        <div className="flex items-center justify-end gap-2 pt-4 text-sm">
+          <span className=" text-slate-500">
+            共 {data?.total} 条, 第 {currentPage + 1} 页
+          </span>
+          <button
+            className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+            onClick={handlePrevComment}
+          >
+            <ChevronLeft className="w-4" />
+          </button>
+          <button
+            className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+            onClick={handleNextComment}
+          >
+            <ChevronRight className="w-4" />
+          </button>
         </div>
       </div>
       <Toaster />
