@@ -188,22 +188,30 @@ export default function CommentWrapper({
             </div>
           ))}
 
-        <div className="flex items-center justify-end gap-2 pt-4 text-sm">
-          <span className=" text-slate-500">
-            共 {data?.total} 条, 第 {currentPage + 1} 页
+        <div className="flex items-center justify-between">
+          <span
+            className="cursor-pointer text-sm text-slate-500"
+            onClick={() => window.scrollTo(0, 0)}
+          >
+            回到顶部
           </span>
-          <button
-            className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
-            onClick={handlePrevComment}
-          >
-            <ChevronLeft className="w-4" />
-          </button>
-          <button
-            className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
-            onClick={handleNextComment}
-          >
-            <ChevronRight className="w-4" />
-          </button>
+          <div className="flex items-center justify-end gap-2 pt-4 text-sm">
+            <span className=" text-slate-500">
+              共 {data?.total} 条, 第 {currentPage + 1} 页
+            </span>
+            <button
+              className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+              onClick={handlePrevComment}
+            >
+              <ChevronLeft className="w-4" />
+            </button>
+            <button
+              className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+              onClick={handleNextComment}
+            >
+              <ChevronRight className="w-4" />
+            </button>
+          </div>
         </div>
       </div>
       <Toaster />
