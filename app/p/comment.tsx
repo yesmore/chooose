@@ -161,7 +161,7 @@ export default function CommentWrapper({
                     src={getAvatarById(item.userId)}
                     width={25}
                     height={25}
-                    className=" border border-slate-600"
+                    className="rounded border border-slate-100"
                   />
                   <span> {item.userName}</span>
                 </div>
