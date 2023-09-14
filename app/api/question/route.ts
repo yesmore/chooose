@@ -97,7 +97,7 @@ export async function POST(
       title,
       content,
       user.id,
-      generateName(user.id),
+      user.name || generateName(user.id),
     );
     if (res) {
       const createdAnswers = await createAnswers(res.id, answers);

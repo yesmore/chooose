@@ -11,7 +11,7 @@ import {
   getAvatarById,
   nFormatter,
 } from "@/lib/utils";
-import { Answer, Comment } from "@/lib/types/question";
+import { Answer, Comment, User } from "@/lib/types/question";
 import ReactMarkdown from "react-markdown";
 import Image from "next/image";
 import { ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
@@ -22,13 +22,14 @@ export default function CommentWrapper({
   session,
   questionId,
   currentAnswers,
+  user,
 }: {
   session: Session | null;
   questionId: string;
   currentAnswers?: Answer[];
+  user?: User;
 }) {
   const [commentList, setCommentList] = useState<Comment[]>([]);
-  const { user } = useUserInfoByEmail(session?.user?.email || "");
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
@@ -106,7 +107,7 @@ export default function CommentWrapper({
     }
   };
   const handleNextComment = () => {
-    if (data && pageSize * currentPage < data.total - 1) {
+    if (data && pageSize * (currentPage + 1) < data.total - 1) {
       setCurrentPage(currentPage + 1);
     }
   };

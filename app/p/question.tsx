@@ -1,7 +1,7 @@
 "use client";
 
 import { Session } from "next-auth";
-import { useQuestion } from "./request";
+import { useQuestion, useUserInfoByEmail } from "./request";
 import { fetcher, formatDate } from "@/lib/utils";
 import { useEffect, useState } from "react";
 import { Answer, Question } from "@/lib/types/question";
@@ -37,6 +37,7 @@ export function QuestionWrapper({
   const [totalClick, setTotalClick] = useState<number>(0);
   const [currentAnswers, setCurrentAnswers] = useState<Answer[]>();
 
+  const { user } = useUserInfoByEmail(session?.user?.email || "");
   const { data, isLoading, isError } = useQuestion(
     cacheQuestionIndex,
     questionId,
@@ -182,7 +183,7 @@ export function QuestionWrapper({
           </div>
 
           <div className="mb-3 text-xs font-medium text-slate-500">
-            {currentQuestion?.userName}{" "}
+            {user?.name || currentQuestion?.userName}{" "}
             {formatDate(currentQuestion?.createdAt || "")}发布
           </div>
 
@@ -260,6 +261,7 @@ export function QuestionWrapper({
       {currentQuestion?.id && (
         <CommentWrapper
           session={session}
+          user={user}
           questionId={currentQuestion?.id}
           currentAnswers={currentAnswers}
         />
