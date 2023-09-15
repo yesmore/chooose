@@ -2,7 +2,7 @@
 
 import { Dispatch, SetStateAction, useState } from "react";
 import { signOut } from "next-auth/react";
-import { LogOut, UserCog, History } from "lucide-react";
+import { LogOut, UserCog, History, SmilePlus } from "lucide-react";
 import Popover from "@/components/shared/popover";
 import Image from "next/image";
 import { Session } from "next-auth";
@@ -32,13 +32,21 @@ export default function UserDropdown({
             {user && (
               <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
                 <p className="truncate font-semibold text-slate-700">
-                  {user?.name || `匿名用户${generateName(user.id || "")}`}#
-                  {user?.id?.slice(-6)}
+                  {user?.name || `${generateName(user.id || "")}`}
                 </p>
               </button>
             )}
             <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
               <p className="truncate text-sm">{email}</p>
+            </button>
+
+            <hr className="my-2" />
+
+            <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
+              <SmilePlus className="h-4 w-4" />
+              <Link href="/manager" className="text-sm">
+                我要投稿
+              </Link>
             </button>
 
             <hr className="my-2" />
@@ -53,11 +61,6 @@ export default function UserDropdown({
               <UserCog className="h-4 w-4" />
               <p className="text-sm">修改昵称</p>
             </button>
-
-            {/* <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
-              <History className="h-4 w-4" />
-              <p className="text-sm">历史阅读</p>
-            </button> */}
 
             <button
               className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"

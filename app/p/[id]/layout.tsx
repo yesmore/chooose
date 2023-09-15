@@ -5,7 +5,7 @@ import Nav from "@/components/layout/nav";
 import Footer from "@/components/layout/footer";
 
 export const metadata = {
-  title: "分享题链",
+  title: "选择困难症治疗中心 | 分享",
   description: "...",
   metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",

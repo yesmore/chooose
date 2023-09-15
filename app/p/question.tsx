@@ -66,6 +66,10 @@ export function QuestionWrapper({
   const handleNextQuestion = () => {
     setCanUpdateQuestion(true);
     const count = data?.count ?? 0;
+    if (cacheQuestionIndex + 1 >= count) {
+      toast("没有更多了");
+      return;
+    }
     if (cacheQuestionIndex >= count - 1) {
       setCacheQuestionIndex(count - 1);
     } else {
@@ -131,6 +135,13 @@ export function QuestionWrapper({
     }
   };
 
+  if (!isLoading && !data)
+    return (
+      <div className="flex justify-center">
+        <NotFound />
+      </div>
+    );
+
   return (
     <div
       className="mx-auto mb-auto max-w-[90%] rounded-md border border-slate-100 bg-[#f3f3f3] p-3 shadow-md md:max-w-[80%]"
@@ -153,17 +164,10 @@ export function QuestionWrapper({
         </div>
       )}
 
-      {!isLoading && !data && <NotFound />}
-
       {data && !isLoading && (
         <div className="mt-4 animate-fade-in ">
           <div className="mb-1 flex items-center justify-between">
-            <h3 className="">
-              {currentQuestion?.title}{" "}
-              <span className="text-sm font-medium text-slate-400">
-                #{cacheQuestionIndex + 1}
-              </span>
-            </h3>
+            <h3 className="">{currentQuestion?.title}</h3>
             {!questionId ? (
               <Link
                 className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
@@ -184,7 +188,9 @@ export function QuestionWrapper({
 
           <div className="mb-3 text-xs font-medium text-slate-500">
             {user?.name || currentQuestion?.userName}{" "}
-            {formatDate(currentQuestion?.createdAt || "")}发布
+            <span className="scale-75 text-slate-400">
+              {formatDate(currentQuestion?.createdAt || "")}发布
+            </span>
           </div>
 
           {currentQuestion?.content && (

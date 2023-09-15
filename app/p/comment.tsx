@@ -33,7 +33,7 @@ export default function CommentWrapper({
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(5);
 
   const { data, isLoading } = useComments(questionId, currentPage, pageSize);
 
@@ -57,11 +57,12 @@ export default function CommentWrapper({
     }
 
     setIsCreatingComment(true);
+    const name = user.name || generateName(user.id || "");
     const res = await fetcher(`/api/comments`, {
       method: "POST",
       body: JSON.stringify({
         userId: user.id,
-        userName: user.name || generateName(user.id || ""),
+        userName: name,
         questionId,
         content: inputComment,
       }),
@@ -74,7 +75,7 @@ export default function CommentWrapper({
           content: inputComment,
           questionId: questionId,
           userId: user.id || "",
-          userName: user.name || "",
+          userName: name,
           likes: 0,
           dislikes: 0,
         },
@@ -107,7 +108,7 @@ export default function CommentWrapper({
     }
   };
   const handleNextComment = () => {
-    if (data && pageSize * (currentPage + 1) < data.total - 1) {
+    if (data && pageSize * (currentPage + 1) < data.total) {
       setCurrentPage(currentPage + 1);
     }
   };
@@ -163,7 +164,7 @@ export default function CommentWrapper({
                     height={25}
                     className="rounded border border-slate-100"
                   />
-                  <span> {item.userName}</span>
+                  <span>{item.userName}</span>
                 </div>
 
                 <div className="flex items-center gap-2">

@@ -5,6 +5,7 @@ import { useState } from "react";
 import toast, { Toaster } from "react-hot-toast";
 import { QuestionResponse } from "../p/request";
 import Link from "next/link";
+import { LoadingDots } from "@/components/shared/icons";
 
 export default function ManagerWrapper() {
   const [isCreating, setIsCreating] = useState(false);
@@ -50,21 +51,26 @@ export default function ManagerWrapper() {
     <>
       <div className="mx-auto mt-6 max-w-[85%] md:max-w-[70%]">
         <div className="flex flex-col justify-center gap-3">
+          <h2 className="text-3xl">投稿中心</h2>
+          <p className="text-blue-500">
+            请将稿件内容发送至邮箱
+            <strong>3224266014@qq.com</strong>
+            审核投稿，投稿格式按下方输入区域排版即可。{" "}
+          </p>
           <input
             className="rounded-md border"
             onChange={(e) => setTitle(e.target.value)}
             type="text"
-            placeholder="标题"
+            placeholder="标题 (必填)"
           />
           <textarea
             className="rounded-md border"
-            placeholder="内容"
+            placeholder="内容描述 (可不填)"
             onChange={(e) => setContent(e.target.value)}
           />
-          <input
+          <textarea
             className="rounded-md border"
-            type="text"
-            placeholder="选项（使用=间隔）"
+            placeholder="选项（每个选项使用=间隔, 必填）"
             onChange={(e) => setAnswer(e.target.value)}
           />
           <button
@@ -72,14 +78,17 @@ export default function ManagerWrapper() {
             onClick={handleCreate}
             className="nice-border mt-4"
           >
-            {isCreating ? "提交中" : "提交"}
+            {isCreating ? <LoadingDots /> : "提交"}
           </button>
-          <p>
-            新问题：
-            <Link href={`/p/${newId}`} target="_blank">
-              {newId}
-            </Link>
-          </p>
+
+          {newId && (
+            <p className="mt-3">
+              题链🔗：
+              <Link href={`/p/${newId}`} target="_blank">
+                {newId}
+              </Link>
+            </p>
+          )}
         </div>
       </div>
       <Toaster />

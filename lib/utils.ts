@@ -79,6 +79,9 @@ export function getAvatarById(id: string) {
 }
 
 export function formatDate(dateString: string) {
+  if (!dateString) {
+    return `0秒前`;
+  }
   const sourceDate = new Date(dateString).getTime();
   const currentDate = new Date().getTime();
 
