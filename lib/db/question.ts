@@ -17,6 +17,7 @@ export async function createQuestion(
       dislikes: 0,
       createdAt: new Date(),
       updatedAt: new Date(),
+      deletedAt: null,
     },
   });
 
@@ -98,18 +99,25 @@ export async function updateQuestionDislikes(id: string, type: "add" | "sub") {
 }
 
 export async function getQuestionByIndex(index: number = 0) {
-  const documentCount = await prisma.question.count();
+  const documentCount = await prisma.question.count({
+    where: { deletedAt: null },
+  });
 
   if (documentCount <= 0) return null;
 
   if (index >= documentCount) {
     // 超出最后一个，随机返回
-    const documentCount = await prisma.question.count();
+    const documentCount = await prisma.question.count({
+      where: { deletedAt: null },
+    });
     if (documentCount === 0) return null;
 
     const randomIndex = Math.floor(Math.random() * documentCount);
     const randomDocument = await prisma.question.findFirst({
       skip: randomIndex,
+      where: {
+        deletedAt: null,
+      },
     });
     console.log("[randomDocument]", randomDocument);
 
@@ -117,36 +125,36 @@ export async function getQuestionByIndex(index: number = 0) {
   }
 
   const res = await prisma.question.findFirst({
-    // where: {
-    //   id: {
-    //     not: {
-    //       in: [],
-    //     },
-    //   },
-    // },
+    where: {
+      deletedAt: null,
+    },
     skip: index,
   });
 
   return { count: documentCount, data: res };
 }
 export async function getQuestionById(id: string) {
-  const documentCount = await prisma.question.count();
+  const documentCount = await prisma.question.count({
+    where: { deletedAt: null },
+  });
 
   if (documentCount <= 0) return null;
 
   const res = await prisma.question.findFirst({
-    where: { id },
+    where: { id, deletedAt: null },
   });
 
   return { count: documentCount, data: res };
 }
 export async function getQuestionByTitle(title: string) {
-  const documentCount = await prisma.question.count();
+  const documentCount = await prisma.question.count({
+    where: { deletedAt: null },
+  });
 
   if (documentCount <= 0) return null;
 
   const res = await prisma.question.findFirst({
-    where: { title },
+    where: { title, deletedAt: null },
   });
 
   return { count: documentCount, data: res };
@@ -159,6 +167,7 @@ export async function getQuestionByExcludedIds(ids: string[]) {
           in: ids,
         },
       },
+      deletedAt: null,
     },
   });
 
@@ -173,6 +182,7 @@ export async function getQuestionByExcludedIds(ids: string[]) {
           in: ids,
         },
       },
+      deletedAt: null,
     },
     skip: randomIndex,
   });
@@ -185,7 +195,7 @@ export async function getQuestions(limit: number) {
   if (documentCount <= 0) return null;
 
   const res = await prisma.question.findMany({
-    where: {},
+    where: { deletedAt: null },
   });
 
   return res;

@@ -33,7 +33,7 @@ export default function CommentWrapper({
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(10);
 
   const { data, isLoading } = useComments(questionId, currentPage, pageSize);
 
