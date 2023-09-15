@@ -42,14 +42,16 @@ export default async function Home() {
             </p>
 
             <div className="mt-6 mb-14 animate-fade-up text-slate-500 ">
-              <p>我不能选择那最好的 是那最好的选择我</p>
-              <p></p>
               <p>
-                Hi, 这里收录了一些的
+                我不能选择那最好的，是那最好的选择我。Hi，这里收录了一些的
                 <span className="items-end justify-center bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
                   奇奇怪怪
                 </span>
-                选择题，
+                选择题，如果你正在上班，或许这里是个
+                <span className="items-end justify-center bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
+                  摸鱼
+                </span>
+                的好地方。你可以在这里选择你的答案，或者不选🤪
               </p>
             </div>
 
