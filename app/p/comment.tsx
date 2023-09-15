@@ -157,21 +157,23 @@ export default function CommentWrapper({
             >
               <div className="flex items-center justify-between text-sm font-medium text-slate-600">
                 <div className="flex items-center gap-2">
-                  <Image
-                    alt={"avatar"}
-                    src={getAvatarById(item.userId)}
-                    width={25}
-                    height={25}
-                    className="rounded border border-slate-100"
-                  />
+                  <div className="rounded border border-slate-200">
+                    <Image
+                      alt={"avatar"}
+                      src={getAvatarById(item.userId)}
+                      width={25}
+                      height={25}
+                    />
+                  </div>
+
                   <span>{item.userName}</span>
+                  <span className="text-xs text-slate-400">
+                    {formatDate(item.createdAt ?? "")}
+                  </span>
                 </div>
 
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-slate-400">#{index + 1}</span>
-                  <span className="text-xs text-slate-400">
-                    {formatDate(item.createdAt ?? "")}
-                  </span>
                   {item.userId === user?.id && (
                     <Trash2
                       className=" h-4 w-4 cursor-pointer text-slate-400"

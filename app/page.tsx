@@ -41,9 +41,17 @@ export default async function Home() {
               </span>
             </p>
 
-            <p className="mt-6 mb-14 animate-fade-up text-slate-500 ">
-              这里收录了一些奇奇怪怪的“选择题”，你可以随意选择
-            </p>
+            <div className="mt-6 mb-14 animate-fade-up text-slate-500 ">
+              <p>我不能选择那最好的 是那最好的选择我</p>
+              <p></p>
+              <p>
+                Hi, 这里收录了一些的
+                <span className="items-end justify-center bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
+                  奇奇怪怪
+                </span>
+                选择题，
+              </p>
+            </div>
 
             <Link
               href="/p"

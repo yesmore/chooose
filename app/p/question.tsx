@@ -91,10 +91,10 @@ export function QuestionWrapper({
   };
 
   const handleUpdateLikes = async (key: "likes" | "dislikes") => {
-    if (!session?.user) {
-      toast("请先登陆");
-      return;
-    }
+    // if (!session?.user) {
+    //   toast("请先登陆");
+    //   return;
+    // }
 
     if (key === "likes") {
       if (isLike) {
@@ -167,7 +167,7 @@ export function QuestionWrapper({
       {data && !isLoading && (
         <div className="mt-4 animate-fade-in ">
           <div className="mb-1 flex items-center justify-between">
-            <h3 className="">{currentQuestion?.title}</h3>
+            <h3 className="text-lg">#{currentQuestion?.title}</h3>
             {!questionId ? (
               <Link
                 className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
@@ -186,7 +186,7 @@ export function QuestionWrapper({
             )}
           </div>
 
-          <div className="mb-3 text-xs font-medium text-slate-500">
+          <div className="mb-5 text-xs font-medium text-slate-500">
             {user?.name || currentQuestion?.userName}{" "}
             <span className="scale-75 text-slate-400">
               {formatDate(currentQuestion?.createdAt || "")}发布
@@ -194,7 +194,7 @@ export function QuestionWrapper({
           </div>
 
           {currentQuestion?.content && (
-            <p className="mb-4">{currentQuestion?.content}</p>
+            <p className="mb-6">{currentQuestion?.content}</p>
           )}
 
           {currentQuestion?.id && (

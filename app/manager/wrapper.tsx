@@ -53,9 +53,9 @@ export default function ManagerWrapper() {
         <div className="flex flex-col justify-center gap-3">
           <h2 className="text-3xl">投稿中心</h2>
           <p className="text-blue-500">
-            请将稿件内容发送至邮箱
+            请将稿件内容发送至院长邮箱
             <strong>3224266014@qq.com</strong>
-            审核投稿，投稿格式按下方输入区域排版即可。{" "}
+            审核，投稿格式按下方输入区域排版即可。{" "}
           </p>
           <input
             className="rounded-md border"
