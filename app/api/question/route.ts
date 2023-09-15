@@ -68,7 +68,14 @@ export async function POST(
         msg: "未登录",
       });
     }
-    if (session?.user && session?.user.email !== "3224266014@qq.com") {
+    const emails = process.env.WHITE_EMAIL || "";
+    const white_emails = emails.split(",");
+
+    if (
+      session &&
+      session.user &&
+      !white_emails.includes(session.user.email || "")
+    ) {
       return NextResponse.json({
         data: null,
         code: 401,
