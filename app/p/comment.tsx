@@ -191,14 +191,14 @@ export default function CommentWrapper({
             </div>
           ))}
 
-        <div className="flex items-center justify-between">
-          <span
+        <div className="mt-3 flex items-center justify-between">
+          <div
             className="cursor-pointer text-sm text-slate-500"
             onClick={() => window.scrollTo(0, 0)}
           >
             回到顶部
-          </span>
-          <div className="flex items-center justify-end gap-2 pt-4 text-sm">
+          </div>
+          <div className="flex items-center justify-end gap-2 text-sm">
             <span className=" text-slate-500">
               共 {data?.total} 条, 第 {currentPage + 1} 页
             </span>

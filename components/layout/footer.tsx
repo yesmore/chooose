@@ -27,14 +27,6 @@ export default function Footer() {
         >
           Discord
         </Link>
-        <span className="mx-2">‣</span>
-        <Link
-          className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-purple-500 bg-clip-text font-semibold text-transparent "
-          href="https://github.com/yesmore/chooose"
-          target="_blank"
-        >
-          <Github className="h-4 w-4 text-slate-500" />
-        </Link>
       </div>
       <div className="mt-2 flex items-center justify-center text-sm">
         <span>Copyright © 2023 </span>

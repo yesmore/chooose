@@ -174,7 +174,7 @@ export function QuestionWrapper({
                 href={`/p/${data.data.id}`}
                 target="_blank"
               >
-                <span>查看题链</span>
+                <span>题链</span>
               </Link>
             ) : (
               <Link
@@ -258,7 +258,7 @@ export function QuestionWrapper({
               href="/"
               className="rounded p-1 text-sm text-slate-600 transition-all hover:border-slate-200 hover:shadow"
             >
-              分享自「选择困难症治疗中心」
+              分享
             </Link>
           )}
         </div>
