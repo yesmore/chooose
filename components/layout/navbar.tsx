@@ -36,11 +36,11 @@ export default function NavBar({ session }: { session: Session | null }) {
                 className="mr-2 rounded-sm"
               ></Image> */}
               <p className="via-dark-500 bg-gradient-to-r from-gray-600 to-gray-500 bg-clip-text font-bold text-transparent">
-                选择困难症
+                Ch
                 <span className="items-end justify-center bg-gradient-to-r from-indigo-400 via-purple-400 to-pink-400 bg-clip-text text-transparent ">
-                  治疗
+                  ooo
                 </span>
-                中心
+                se.icu
               </p>
             </Link>
             {/* <Link
