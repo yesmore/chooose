@@ -14,8 +14,6 @@ export default function Footer() {
         🤡
       </Link>
       <div className="mt-2 flex items-center justify-center text-sm">
-        <Link href="/manager">我要投稿</Link>
-        <span className="mx-2">‣</span>
         <Link href="/privacy">隐私政策</Link>
         <span className="mx-2">‣</span>
         <Link href="mailto:3224266014@qq.com">联系我们</Link>

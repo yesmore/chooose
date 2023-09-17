@@ -181,7 +181,7 @@ export function QuestionWrapper({
                 href="/p"
                 className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
               >
-                查看更多疗程
+                更多
               </Link>
             )}
           </div>
