@@ -225,7 +225,7 @@ export function QuestionWrapper({
             <button
               className={
                 "ml-3 flex items-center gap-1 rounded-lg text-slate-500 transition-all hover:text-slate-600 " +
-                `${isLike ? "text-blue-600" : ""}`
+                `${isLike ? "text-blue-500" : ""}`
               }
               onClick={() => handleUpdateLikes("likes")}
             >
@@ -235,7 +235,7 @@ export function QuestionWrapper({
             <button
               className={
                 "flex items-center gap-1 rounded-lg text-slate-400 transition-all hover:text-slate-600 " +
-                `${isDislike ? "text-blue-600" : ""}`
+                `${isDislike ? "text-blue-500" : ""}`
               }
               onClick={() => handleUpdateLikes("dislikes")}
             >

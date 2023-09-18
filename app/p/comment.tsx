@@ -218,23 +218,25 @@ export default function CommentWrapper({
           >
             回到顶部
           </div>
-          <div className="flex items-center justify-end gap-2 text-sm">
-            <span className=" text-slate-500">
-              共 {data?.total} 条, 第 {currentPage + 1} 页
-            </span>
-            <button
-              className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
-              onClick={handlePrevComment}
-            >
-              <ChevronLeft className="w-4" />
-            </button>
-            <button
-              className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
-              onClick={handleNextComment}
-            >
-              <ChevronRight className="w-4" />
-            </button>
-          </div>
+          {data && Math.ceil(data.total / pageSize) > 1 && (
+            <div className="flex items-center justify-end gap-2 text-sm">
+              <span className=" text-slate-500">
+                第 {currentPage + 1} / {Math.ceil(data.total / pageSize)} 页
+              </span>
+              <button
+                className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+                onClick={handlePrevComment}
+              >
+                <ChevronLeft className="w-4" />
+              </button>
+              <button
+                className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+                onClick={handleNextComment}
+              >
+                <ChevronRight className="w-4" />
+              </button>
+            </div>
+          )}
         </div>
       </div>
       <Toaster />
