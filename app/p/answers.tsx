@@ -205,7 +205,7 @@ export function AnswerWrapper({
                   maxWidth: "100%",
                 }}
               />
-              <div className="flex items-center px-3 text-left">
+              <div className="flex items-center px-4 text-left">
                 {item.value}
               </div>
               <div className="absolute left-1 bottom-1 scale-90 rounded-lg text-xs text-slate-500 transition-all duration-1000">

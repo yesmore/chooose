@@ -41,4 +41,5 @@ export interface User {
   email: string;
   emailVerified: string;
   image?: string;
+  credit: number;
 }
