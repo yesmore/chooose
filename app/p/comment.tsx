@@ -36,7 +36,7 @@ export default function CommentWrapper({
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(15);
+  const [pageSize, setPageSize] = useState(5);
 
   const { data, isLoading } = useComments(questionId, currentPage, pageSize);
 
@@ -116,12 +116,37 @@ export default function CommentWrapper({
     }
   };
 
+  const renderPageNation = () =>
+    data &&
+    Math.ceil(data.total / pageSize) > 1 && (
+      <div className="flex items-center justify-end gap-2 text-sm">
+        <span className=" text-slate-500">
+          第 {currentPage + 1} / {Math.ceil(data.total / pageSize)} 页
+        </span>
+        <button
+          className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+          onClick={handlePrevComment}
+        >
+          <ChevronLeft className="w-4" />
+        </button>
+        <button
+          className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
+          onClick={handleNextComment}
+        >
+          <ChevronRight className="w-4" />
+        </button>
+      </div>
+    );
+
   return (
     <>
       <div className="mt-6 w-full">
-        <p className="mb-2 text-sm font-semibold text-slate-500">
-          病友说吧{data && data?.total > 0 && `(${nFormatter(data.total)})`}
-        </p>
+        <div className="mb-2 flex items-center justify-between">
+          <p className="text-sm font-semibold text-slate-500">
+            病友说吧{data && data?.total > 0 && `(${nFormatter(data.total)})`}
+          </p>
+          {renderPageNation()}
+        </div>
 
         {isLoading && (
           <div className="">
@@ -185,7 +210,7 @@ export default function CommentWrapper({
             </div>
           ))}
 
-        <div className="relative">
+        <div className="relative mt-3 ">
           <textarea
             className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-[#f8f8f8a1] text-sm placeholder-gray-400 shadow-inner"
             placeholder={`${
@@ -220,25 +245,7 @@ export default function CommentWrapper({
           >
             回到顶部
           </div>
-          {data && Math.ceil(data.total / pageSize) > 1 && (
-            <div className="flex items-center justify-end gap-2 text-sm">
-              <span className=" text-slate-500">
-                第 {currentPage + 1} / {Math.ceil(data.total / pageSize)} 页
-              </span>
-              <button
-                className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
-                onClick={handlePrevComment}
-              >
-                <ChevronLeft className="w-4" />
-              </button>
-              <button
-                className="rounded-lg border px-1 shadow transition-all hover:bg-slate-500 hover:text-white"
-                onClick={handleNextComment}
-              >
-                <ChevronRight className="w-4" />
-              </button>
-            </div>
-          )}
+          {renderPageNation()}
         </div>
       </div>
       <Toaster />
