@@ -36,7 +36,7 @@ export default function CommentWrapper({
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(5);
+  const [pageSize, setPageSize] = useState(15);
 
   const { data, isLoading } = useComments(questionId, currentPage, pageSize);
 
@@ -189,7 +189,7 @@ export default function CommentWrapper({
 
                 <div className="flex items-center gap-2">
                   <span className="text-xs text-slate-400">
-                    #{currentPage * 10 + (index + 1)}
+                    #{currentPage * 15 + (index + 1)}
                   </span>
                   {item.userId === user?.id && (
                     <Trash2
