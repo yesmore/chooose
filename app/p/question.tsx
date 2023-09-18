@@ -146,7 +146,7 @@ export function QuestionWrapper({
 
   return (
     <div
-      className="mx-auto mb-auto max-w-[90%] rounded-md border border-slate-100 bg-[#f3f3f3] p-3 shadow-md md:max-w-[80%]"
+      className="mx-auto mb-auto max-w-[90%] rounded-md border border-slate-100 bg-[#f3f3f3] p-3 shadow-md md:max-w-[70%]"
       style={{ minHeight: "calc(100vh - 70px)" }}
     >
       {isLoading && (
