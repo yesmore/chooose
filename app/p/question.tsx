@@ -198,11 +198,9 @@ export function QuestionWrapper({
           </div>
 
           {currentQuestion?.content && (
-            <ReactMarkdown
-              className="mb-6"
-              children={currentQuestion.content}
-              remarkPlugins={[remarkGfm]}
-            />
+            <ReactMarkdown className="mb-6" remarkPlugins={[remarkGfm]}>
+              {currentQuestion.content}
+            </ReactMarkdown>
           )}
 
           {currentQuestion?.id && (

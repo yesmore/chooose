@@ -204,10 +204,9 @@ export default function CommentWrapper({
               </div>
 
               <div className="my-1 pl-9 text-sm">
-                <ReactMarkdown
-                  children={item.content}
-                  remarkPlugins={[remarkGfm]}
-                />
+                <ReactMarkdown remarkPlugins={[remarkGfm]}>
+                  {item.content}
+                </ReactMarkdown>
               </div>
             </div>
           ))}
