@@ -16,6 +16,7 @@ import toast, { Toaster } from "react-hot-toast";
 import { ArrowRight, ArrowLeft, ThumbsUp, ThumbsDown } from "lucide-react";
 import { nFormatter } from "../../lib/utils";
 import WatchButton from "@/components/question/watch-button";
+import ReactMarkdown from "react-markdown";
 
 export function QuestionWrapper({
   session,
@@ -167,7 +168,7 @@ export function QuestionWrapper({
       {data && !isLoading && (
         <div className="mt-4 animate-fade-in ">
           <div className="mb-1 flex items-center justify-between">
-            <h3 className="text-lg font-medium">#{currentQuestion?.title}</h3>
+            <h3 className="text-lg font-medium">{currentQuestion?.title}</h3>
             {!questionId ? (
               <Link
                 className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
@@ -194,7 +195,7 @@ export function QuestionWrapper({
           </div>
 
           {currentQuestion?.content && (
-            <p className="mb-6">{currentQuestion?.content}</p>
+            <ReactMarkdown>{currentQuestion.content}</ReactMarkdown>
           )}
 
           {currentQuestion?.id && (

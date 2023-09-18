@@ -65,12 +65,12 @@ export default function ManagerWrapper() {
           />
           <textarea
             className="rounded-md border"
-            placeholder="内容描述 (可不填)"
+            placeholder="内容描述, 支持Markdown语法 (可不填)"
             onChange={(e) => setContent(e.target.value)}
           />
           <textarea
             className="rounded-md border"
-            placeholder="选项（每个选项使用=间隔, 必填）"
+            placeholder="选项, 仅支持文本（每个选项使用=间隔, 必填）"
             onChange={(e) => setAnswer(e.target.value)}
           />
           <button

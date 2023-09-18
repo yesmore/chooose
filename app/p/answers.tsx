@@ -81,7 +81,7 @@ export function AnswerWrapper({
   }, [userSelectedQuestions, existingQuestionIndex, questionId]);
 
   const onCaclePercent = (itemClick: number) =>
-    `${((itemClick / totalClick) * 100).toFixed(2)}%`;
+    `${((itemClick / totalClick) * 100).toFixed(0)}%`;
 
   const generateItemClasses = (index: number) => `
     relative cursor-pointer text-sm rounded-lg pt-5 pb-5 shadow transition-all px-3 hover:bg-slate-400 hover:text-white
