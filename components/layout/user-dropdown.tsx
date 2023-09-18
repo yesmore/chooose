@@ -10,6 +10,7 @@ import Link from "next/link";
 import { useUserInfoByEmail } from "@/pages/p/request";
 import { generateName, getAvatarById } from "@/lib/utils";
 import { useEditNicknameModal } from "./edit-nickname-modal";
+import Pill from "../shared/icons/pill";
 
 export default function UserDropdown({
   session,
@@ -43,6 +44,13 @@ export default function UserDropdown({
             <hr className="my-2" />
 
             <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
+              <Pill className="h-4 w-4" />
+              <Link href="/" className="text-sm">
+                我的药丸
+              </Link>
+            </button>
+
+            <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
               <SmilePlus className="h-4 w-4" />
               <Link href="/manager" className="text-sm">
                 我有一个问题
@@ -60,6 +68,14 @@ export default function UserDropdown({
             >
               <UserCog className="h-4 w-4" />
               <p className="text-sm">修改昵称</p>
+            </button>
+
+            <button
+              className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100"
+              disabled
+            >
+              <History className="h-4 w-4" />
+              <p className="text-sm">历史浏览</p>
             </button>
 
             <button

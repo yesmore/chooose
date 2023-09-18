@@ -169,7 +169,9 @@ export function QuestionWrapper({
       {data && !isLoading && (
         <div className="mt-4 animate-fade-in ">
           <div className="mb-1 flex items-center justify-between">
-            <h3 className="text-lg font-medium">{currentQuestion?.title}</h3>
+            <h3 className="text-lg font-medium text-slate-600">
+              {currentQuestion?.title}
+            </h3>
             {!questionId ? (
               <Link
                 className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
@@ -269,6 +271,21 @@ export function QuestionWrapper({
           )}
         </div>
       </div>
+
+      {isLoading && (
+        <div className="">
+          <div className=" mt-4 grid grid-cols-1 gap-4 text-center">
+            {[1, 2, 3, 4].map((item) => (
+              <Skeleton
+                key={item}
+                className=""
+                style={{ width: "100%" }}
+                height={54}
+              />
+            ))}
+          </div>
+        </div>
+      )}
 
       {currentQuestion?.id && (
         <CommentWrapper

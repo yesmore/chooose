@@ -8,7 +8,6 @@ import { Answer } from "@/lib/types/question";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import Skeleton from "react-loading-skeleton";
 import "react-loading-skeleton/dist/skeleton.css";
-import WatchButton from "@/components/question/watch-button";
 import { Answer_Letters } from "@/lib/constants";
 
 interface UserSelectedQuestion {
@@ -84,7 +83,7 @@ export function AnswerWrapper({
     `${((itemClick / totalClick) * 100).toFixed(0)}%`;
 
   const generateItemClasses = (index: number) => `
-    relative cursor-pointer text-sm rounded-lg pt-5 pb-5 shadow transition-all px-3 hover:bg-slate-400 hover:text-white
+    relative flex cursor-pointer text-sm rounded-lg pt-5 pb-5 shadow transition-all px-3 hover:bg-slate-400 hover:text-white
      ${selectIndex === index ? "bg-slate-300" : "bg-gray-50"}
      ${isUpdatingClick && selectIndex === index ? "animate-pulse" : ""}
   `;
@@ -206,8 +205,10 @@ export function AnswerWrapper({
                   maxWidth: "100%",
                 }}
               />
-              <div className="px-3 text-left">{item.value}</div>
-              <div className="absolute left-1 bottom-1 rounded-lg text-xs text-slate-500 transition-all duration-1000">
+              <div className="flex items-center px-3 text-left">
+                {item.value}
+              </div>
+              <div className="absolute left-1 bottom-1 scale-90 rounded-lg text-xs text-slate-500 transition-all duration-1000">
                 {isUpdatingClick || totalClick === 0
                   ? ""
                   : `${onCaclePercent(item.click)}`}

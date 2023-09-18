@@ -18,6 +18,8 @@ import { ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
 import { LoadingDots } from "@/components/shared/icons";
 import { Answer_Letters } from "@/lib/constants";
 import remarkGfm from "remark-gfm";
+import Skeleton from "react-loading-skeleton";
+import "react-loading-skeleton/dist/skeleton.css";
 
 export default function CommentWrapper({
   session,
@@ -145,9 +147,24 @@ export default function CommentWrapper({
             }
             onClick={handleCreateComment}
           >
-            {isCreatingComment ? <LoadingDots color="#fff" /> : "提交"}
+            {isCreatingComment ? <LoadingDots color="#151515" /> : "提交"}
           </button>
         </div>
+
+        {isLoading && (
+          <div className="">
+            <div className=" mt-4 grid grid-cols-1 gap-4 text-center">
+              {[1, 2, 3, 4].map((item) => (
+                <Skeleton
+                  key={item}
+                  className=""
+                  style={{ width: "100%" }}
+                  height={54}
+                />
+              ))}
+            </div>
+          </div>
+        )}
 
         {commentList &&
           commentList.map((item, index) => (
