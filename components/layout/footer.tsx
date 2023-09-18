@@ -1,8 +1,8 @@
 "use client";
 
 import Link from "next/link";
-import Image from "next/image";
-import { Github } from "../shared/icons";
+import Github from "../shared/icons/github";
+import Pill from "../shared/icons/pill";
 
 export default function Footer() {
   return (
@@ -11,7 +11,7 @@ export default function Footer() {
         href="/"
         className="flex flex-col items-center justify-center font-display text-xl"
       >
-        🤡
+        <Pill className="h-5 w-5" />
       </Link>
       <div className="mt-2 flex items-center justify-center text-sm">
         <Link href="/privacy">隐私政策</Link>

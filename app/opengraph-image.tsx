@@ -1,4 +1,5 @@
 /* eslint-disable @next/next/no-img-element */
+import Pill from "@/components/shared/icons/pill";
 import { ImageResponse } from "next/server";
 
 export const runtime = "edge";
@@ -25,11 +26,7 @@ export default async function OG() {
             "linear-gradient(to bottom right, #E0E7FF 25%, #ffffff 50%, #CFFAFE 75%)",
         }}
       >
-        <img
-          src={new URL("../public/logo.png", import.meta.url).toString()}
-          alt="Chooose Logo"
-          tw="w-20 h-20 mb-4 opacity-95"
-        />
+        <Pill className="h-5 w-5" />
         <h1
           style={{
             fontSize: "100px",

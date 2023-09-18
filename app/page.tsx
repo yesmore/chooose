@@ -41,7 +41,7 @@ export default async function Home() {
               </span>
             </p>
 
-            <div className="mt-6 mb-14 animate-fade-up text-slate-500 ">
+            <div className="mx-auto mt-6 mb-14 flex max-w-[70%] animate-fade-up flex-col text-slate-500 md:flex-row ">
               <p>
                 Hi，这里收录了一些的
                 <span className="bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
@@ -59,7 +59,7 @@ export default async function Home() {
               href="/p"
               className=" rounded-md bg-slate-800 px-14 py-3 text-white shadow-lg transition-all hover:opacity-70 hover:shadow-inner"
             >
-              现在加入疗程
+              现在开始治疗
             </Link>
           </div>
           <About />

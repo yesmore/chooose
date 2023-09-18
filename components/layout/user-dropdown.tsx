@@ -8,7 +8,7 @@ import Image from "next/image";
 import { Session } from "next-auth";
 import Link from "next/link";
 import { useUserInfoByEmail } from "@/pages/p/request";
-import { generateName, getAvatarById } from "@/lib/utils";
+import { generateName, getAvatarById, nFormatter } from "@/lib/utils";
 import { useEditNicknameModal } from "./edit-nickname-modal";
 import Pill from "../shared/icons/pill";
 
@@ -46,7 +46,7 @@ export default function UserDropdown({
             <button className="relative flex w-full items-center justify-start space-x-2 rounded-md p-2 text-left text-sm transition-all duration-75 hover:bg-gray-100">
               <Pill className="h-4 w-4" />
               <Link href="/" className="text-sm">
-                累计药丸: {user?.credit}
+                我的药丸{user && `: ${nFormatter(user.credit)}`}
               </Link>
             </button>
 

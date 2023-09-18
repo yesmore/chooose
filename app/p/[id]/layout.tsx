@@ -10,7 +10,7 @@ export const metadata = {
   metadataBase: new URL("https://chooose.icu"),
   themeColor: "#FFF",
   icons: {
-    icon: "/logo.png",
+    icon: "/pill.svg",
   },
 };
 

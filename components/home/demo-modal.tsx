@@ -19,7 +19,7 @@ const DemoModal = ({
     <Modal showModal={showDemoModal} setShowModal={setShowDemoModal}>
       <div className="w-full overflow-hidden md:max-w-md md:rounded-2xl md:border md:border-gray-100 md:shadow-xl">
         <div className="flex flex-col items-center justify-center space-y-3 bg-white px-4 py-6 pt-8 text-center md:px-16">
-          <a href="https://chooose.icu">
+          {/* <a href="https://chooose.icu">
             <Image
               src="/logo.png"
               alt="Chooose Logo"
@@ -27,7 +27,7 @@ const DemoModal = ({
               width={20}
               height={20}
             />
-          </a>
+          </a> */}
           <h3 className="font-display text-2xl font-bold">Chooose</h3>
           <p className="text-sm text-gray-500">
             Chooose is an opinionated collection of components, hooks, and

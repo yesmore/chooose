@@ -12,7 +12,7 @@ export const metadata = {
   themeColor: "#FFF",
   icons: {
     // <head><link/></head>
-    icon: "/logo.png",
+    icon: "/pill.svg",
   },
 };
 

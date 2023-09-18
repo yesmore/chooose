@@ -50,7 +50,7 @@ export default function WordClouds() {
   };
 
   return (
-    <div className="mx-auto h-64 w-full overflow-hidden rounded-[30px] text-center md:h-80">
+    <div className="mx-auto h-64 w-full overflow-hidden rounded text-center md:h-80">
       <div id="word-cloud-container">
         {words.map((word, index) => (
           <span className=" cursor-pointer" key={index} data-word-id={index}>
