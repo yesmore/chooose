@@ -41,7 +41,7 @@ export default async function Home() {
               </span>
             </p>
 
-            <div className="mx-auto mt-6 mb-14 flex max-w-[70%] animate-fade-up flex-col text-slate-500 md:flex-row ">
+            <div className="mx-auto mt-10 mb-14 max-w-[90%] animate-fade-up text-slate-500 md:max-w-[70%]">
               <p>
                 Hi，这里收录了一些的
                 <span className="bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
@@ -51,7 +51,7 @@ export default async function Home() {
                 <span className="bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
                   摸鱼
                 </span>
-                的好地方🤪
+                的好地方。当然，如果没治好你的选择困难症，那跟本叼无关🤪
               </p>
             </div>
 
