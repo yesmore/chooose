@@ -191,9 +191,9 @@ export function QuestionWrapper({
           </div>
 
           <div className="mb-5 text-xs font-medium text-slate-500">
-            {currentQuestion?.userName}{" "}
+            #{cacheQuestionIndex + 1} {currentQuestion?.userName}{" "}
             <span className="scale-75 text-slate-400">
-              {formatDate(currentQuestion?.createdAt || "")}发布
+              {formatDate(currentQuestion?.createdAt || "")}
             </span>
           </div>
 

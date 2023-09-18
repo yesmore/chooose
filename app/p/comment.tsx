@@ -36,7 +36,7 @@ export default function CommentWrapper({
   const [inputComment, setInputComment] = useState("");
   const [isCreatingComment, setIsCreatingComment] = useState(false);
   const [currentPage, setCurrentPage] = useState(0);
-  const [pageSize, setPageSize] = useState(10);
+  const [pageSize, setPageSize] = useState(15);
 
   const { data, isLoading } = useComments(questionId, currentPage, pageSize);
 
@@ -120,36 +120,8 @@ export default function CommentWrapper({
     <>
       <div className="mt-6 w-full">
         <p className="mb-2 text-sm font-semibold text-slate-500">
-          病友评论吧{data && data?.total > 0 && `(${nFormatter(data.total)})`}
+          病友说吧{data && data?.total > 0 && `(${nFormatter(data.total)})`}
         </p>
-
-        <div className="relative">
-          <textarea
-            className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-[#f8f8f8a1] text-sm placeholder-gray-400 shadow-inner"
-            placeholder={`${
-              Answer_Letters[currentAnswers?.length || 0]
-            }: 你的答案 (支持Markdown语法)`}
-            value={inputComment}
-            rows={4}
-            maxLength={300}
-            onChange={(e) => setInputComment(e.target.value)}
-            onKeyDown={(e) => handleKeydown(e.key)}
-          />
-          <button
-            disabled={isCreatingComment || inputComment.length === 0}
-            className={
-              "absolute right-2 bottom-4 w-16 cursor-pointer rounded border px-3 py-1 text-sm text-slate-500 transition-all " +
-              `${
-                inputComment.length > 0
-                  ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
-                  : "bg-slate-400 text-slate-100"
-              }`
-            }
-            onClick={handleCreateComment}
-          >
-            {isCreatingComment ? <LoadingDots color="#151515" /> : "提交"}
-          </button>
-        </div>
 
         {isLoading && (
           <div className="">
@@ -191,7 +163,9 @@ export default function CommentWrapper({
                 </div>
 
                 <div className="flex items-center gap-2">
-                  <span className="text-xs text-slate-400">#{index + 1}</span>
+                  <span className="text-xs text-slate-400">
+                    #{currentPage * 10 + (index + 1)}
+                  </span>
                   {item.userId === user?.id && (
                     <Trash2
                       className=" h-4 w-4 cursor-pointer text-slate-400"
@@ -210,6 +184,34 @@ export default function CommentWrapper({
               </div>
             </div>
           ))}
+
+        <div className="relative">
+          <textarea
+            className="shadow-blue-gray-200 w-full rounded-md border border-slate-200 bg-[#f8f8f8a1] text-sm placeholder-gray-400 shadow-inner"
+            placeholder={`${
+              Answer_Letters[currentAnswers?.length || 0]
+            }: 你的想法 (支持Markdown语法)`}
+            value={inputComment}
+            rows={4}
+            maxLength={300}
+            onChange={(e) => setInputComment(e.target.value)}
+            onKeyDown={(e) => handleKeydown(e.key)}
+          />
+          <button
+            disabled={isCreatingComment || inputComment.length === 0}
+            className={
+              "absolute right-2 bottom-4 w-16 cursor-pointer rounded border px-3 py-1 text-sm text-slate-500 transition-all " +
+              `${
+                inputComment.length > 0
+                  ? "border-blue-400 text-blue-400 hover:bg-blue-400 hover:text-white"
+                  : "bg-slate-400 text-slate-100"
+              }`
+            }
+            onClick={handleCreateComment}
+          >
+            {isCreatingComment ? <LoadingDots color="#151515" /> : "提交"}
+          </button>
+        </div>
 
         <div className="mt-3 flex items-center justify-between">
           <div
