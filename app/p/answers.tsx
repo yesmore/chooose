@@ -206,7 +206,7 @@ export function AnswerWrapper({
                   maxWidth: "100%",
                 }}
               />
-              <div>{item.value}</div>
+              <div className="px-3 text-left">{item.value}</div>
               <div className="absolute left-1 bottom-1 rounded-lg text-xs text-slate-500 transition-all duration-1000">
                 {isUpdatingClick || totalClick === 0
                   ? ""

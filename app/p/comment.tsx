@@ -17,6 +17,7 @@ import Image from "next/image";
 import { ChevronLeft, ChevronRight, Trash2 } from "lucide-react";
 import { LoadingDots } from "@/components/shared/icons";
 import { Answer_Letters } from "@/lib/constants";
+import remarkGfm from "remark-gfm";
 
 export default function CommentWrapper({
   session,
@@ -52,7 +53,7 @@ export default function CommentWrapper({
       toast("登录后评论");
       return;
     }
-    if (inputComment.length === 0) {
+    if (inputComment.length === 0 || inputComment === "~~~") {
       return;
     }
 
@@ -186,7 +187,10 @@ export default function CommentWrapper({
               </div>
 
               <div className="my-1 pl-9 text-sm">
-                <ReactMarkdown>{item.content}</ReactMarkdown>
+                <ReactMarkdown
+                  children={item.content}
+                  remarkPlugins={[remarkGfm]}
+                />
               </div>
             </div>
           ))}

@@ -17,6 +17,7 @@ import { ArrowRight, ArrowLeft, ThumbsUp, ThumbsDown } from "lucide-react";
 import { nFormatter } from "../../lib/utils";
 import WatchButton from "@/components/question/watch-button";
 import ReactMarkdown from "react-markdown";
+import remarkGfm from "remark-gfm";
 
 export function QuestionWrapper({
   session,
@@ -195,7 +196,11 @@ export function QuestionWrapper({
           </div>
 
           {currentQuestion?.content && (
-            <ReactMarkdown>{currentQuestion.content}</ReactMarkdown>
+            <ReactMarkdown
+              className="mb-6"
+              children={currentQuestion.content}
+              remarkPlugins={[remarkGfm]}
+            />
           )}
 
           {currentQuestion?.id && (
