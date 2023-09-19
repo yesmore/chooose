@@ -13,7 +13,13 @@ import NotFound from "@/components/layout/not-found";
 import CommentWrapper from "./comment";
 import useLocalStorage from "@/lib/hooks/use-local-storage";
 import toast, { Toaster } from "react-hot-toast";
-import { ArrowRight, ArrowLeft, ThumbsUp, ThumbsDown } from "lucide-react";
+import {
+  ArrowRight,
+  ArrowLeft,
+  ThumbsUp,
+  ThumbsDown,
+  Trash2,
+} from "lucide-react";
 import { nFormatter } from "../../lib/utils";
 import WatchButton from "@/components/question/watch-button";
 import ReactMarkdown from "react-markdown";
@@ -137,6 +143,23 @@ export function QuestionWrapper({
     }
   };
 
+  const handleDeleteQuestion = async (id: string, email: string) => {
+    const res = await fetcher(`/api/question?id=${id}&email=${email}`, {
+      method: "DELETE",
+    });
+    if (res && res.id) {
+      toast("已删除");
+      const count = data?.count ?? 0;
+      if (cacheQuestionIndex + 1 >= count) {
+        handlePrevQuestion();
+      } else {
+        handleNextQuestion();
+      }
+    } else {
+      toast(res);
+    }
+  };
+
   if (!isLoading && !data)
     return (
       <div className="flex justify-center">
@@ -172,22 +195,34 @@ export function QuestionWrapper({
             <h3 className="text-lg font-medium text-slate-600">
               {currentQuestion?.title}
             </h3>
-            {!questionId ? (
-              <Link
-                className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
-                href={`/p/${data.data.id}`}
-                target="_blank"
-              >
-                <span>题链</span>
-              </Link>
-            ) : (
-              <Link
-                href="/p"
-                className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
-              >
-                更多
-              </Link>
-            )}
+
+            <div className="flex min-w-fit items-center gap-2">
+              {!questionId ? (
+                <Link
+                  className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
+                  href={`/p/${data.data.id}`}
+                  target="_blank"
+                >
+                  <span>题链</span>
+                </Link>
+              ) : (
+                <Link
+                  href="/p"
+                  className="rounded p-1 text-xs text-slate-500 transition-all after:content-['↗'] hover:border-slate-200 hover:shadow"
+                >
+                  更多
+                </Link>
+              )}
+
+              {currentQuestion && currentQuestion.userId === user?.id && (
+                <Trash2
+                  className=" h-4 w-4 cursor-pointer text-slate-400"
+                  onClick={() =>
+                    handleDeleteQuestion(currentQuestion.id || "", user.email)
+                  }
+                />
+              )}
+            </div>
           </div>
 
           <div className="mb-5 text-xs font-medium text-slate-500">
@@ -247,13 +282,13 @@ export function QuestionWrapper({
           {!questionId ? (
             <div className="flex items-center gap-2">
               <button
-                className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
+                className="rounded-lg border bg-slate-200 px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
                 onClick={handlePrevQuestion}
               >
                 <ArrowLeft className="w-5" />
               </button>
               <button
-                className="rounded-lg border px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
+                className="rounded-lg border bg-slate-200 px-4 py-1 shadow transition-all hover:bg-slate-500 hover:text-white md:px-6 "
                 onClick={handleNextQuestion}
               >
                 <ArrowRight className="w-5" />

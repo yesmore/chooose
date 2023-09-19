@@ -47,7 +47,7 @@ export default async function Home() {
                 <span className="bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
                   奇奇怪怪
                 </span>
-                选择题，你可以在这里选择你的答案，或者不选。如果你正在上班，或许这里是个
+                选择题/问题，你可以在这里选择你的答案，或者不选。如果你正在上班，或许这里是个
                 <span className="bg-gradient-to-r from-pink-500 via-pink-500 to-pink-500 bg-clip-text text-transparent ">
                   摸鱼
                 </span>

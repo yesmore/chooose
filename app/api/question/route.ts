@@ -2,6 +2,7 @@ import { NextRequest, NextResponse } from "next/server";
 import {
   createAnswers,
   createQuestion,
+  deleteQuestion,
   getQuestionById,
   getQuestionByIndex,
   getQuestionByTitle,
@@ -146,5 +147,29 @@ export async function PUT(
     }
   } catch {
     return NextResponse.json("error");
+  }
+}
+
+export async function DELETE(req: NextRequest) {
+  try {
+    const session = await getServerSession(authOptions);
+    if (!session?.user) {
+      return NextResponse.json("请登录");
+    }
+
+    const { searchParams } = new URL(req.url);
+    const id = searchParams.get("id");
+    const email = searchParams.get("email");
+
+    if (!id) return NextResponse.json("id不能为空");
+
+    if (email !== session.user.email) return NextResponse.json("未授权");
+
+    const res = await deleteQuestion(id);
+    return NextResponse.json(res);
+  } catch (error) {
+    console.log("[出错了]", error);
+
+    return NextResponse.json(error);
   }
 }

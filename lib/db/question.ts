@@ -40,6 +40,19 @@ export async function createAnswers(
   return createdAnswers;
 }
 
+export async function deleteQuestion(id: string) {
+  const res = prisma.question.update({
+    where: {
+      id,
+    },
+    data: {
+      deletedAt: new Date(),
+    },
+  });
+
+  return res;
+}
+
 export async function updateQuestion(data: Question) {
   const updatedQuestion = await prisma.question.update({
     where: {
