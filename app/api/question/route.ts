@@ -70,13 +70,9 @@ export async function POST(
       });
     }
     const emails = process.env.WHITE_EMAIL || "";
-    const white_emails = emails.split(",");
+    const white_emails = emails.split(","); // !white_emails.includes(session.user.email || "")
 
-    if (
-      session &&
-      session.user &&
-      !white_emails.includes(session.user.email || "")
-    ) {
+    if (session && session.user) {
       return NextResponse.json({
         data: null,
         code: 401,
